@@ -1,0 +1,86 @@
+// 取消 Responsive Font Sizes
+$enable-rfs:                  false;
+// 取消 validation icons
+$enable-validation-icons:     false;
+
+// 顏色
+$primary-120:   #7B6651;
+$primary-100:   #BF9D7D;
+$primary-80:    #D0B79F;
+$primary-60:    #E1D1C2;
+$primary-40:    #F1EAE4;
+$primary-20:    #FAF7F5;
+
+$success-120:   #299F65;
+$success-100:   #52DD7E;
+$success-20:    #BCFBBD;
+$success-10:    #E8FEE7;
+
+$info-120:      #1D66AC;
+$info-100:      #3BADEF;
+$info-20:       #B1EFFD;
+$info-10:       #E6FBFE;
+
+$danger-120:    #C22538;
+$danger-100:    #DA3E51;
+$danger-20:     #F5CCD1;
+$danger-10:     #FDECEF;
+
+$neutral-100:   #000000;
+$neutral-80:    #4B4B4B;
+$neutral-60:    #909090;
+$neutral-40:    #ECECEC;
+$neutral-10:    #F9F9F9;
+$neutral-0:     #FFFFFF;
+
+$background:    #140F0A;
+$balck:           $neutral-100;
+$white:           $neutral-0;
+
+$primary:   $primary-100;
+$success:   $success-100;
+$info:      $info-100;
+$danger:    $danger-100;
+
+
+// heading 字體大小
+$font-size-base:              1rem;
+$h1-font-size:                $font-size-base * 3;
+$h2-font-size:                $font-size-base * 2.5;
+$h3-font-size:                $font-size-base * 2;
+$h4-font-size:                $font-size-base * 1.75;
+$h5-font-size:                $font-size-base * 1.5;
+$h6-font-size:                $font-size-base * 1.25;
+
+// heading 上下間距
+$headings-margin-bottom:      0;
+
+// heading 文字間距
+$headings-letter-spacing:      .05em;
+
+// display heading 字體大小，除 display-1 改為 100 外其餘無調整
+$display-font-sizes: (
+  1: 6.25rem,
+  2: 4.5rem,
+  3: 4rem,
+  4: 3.5rem,
+  5: 3rem,
+  6: 2.5rem
+) ;
+
+// 按鈕
+$btn-padding-y:               1rem - .0625;
+$btn-padding-x:               2rem - .0625;
+$btn-font-weight:             700;
+$btn-color:                   $white;
+
+// 表單
+$input-padding-y:         1rem - .0625;
+$input-padding-x:         1rem - .0625;
+$border-color: $white;
+
+// 驗證訊息間距
+$form-text-margin-top:        calc(.5rem - 1px);
+
+
+$border-radius:               .5rem;
