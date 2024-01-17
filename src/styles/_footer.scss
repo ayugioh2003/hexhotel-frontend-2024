@@ -5,10 +5,18 @@
   line-height: 1.5;
   letter-spacing: 0.32px;
   color: $neutral-0;
+  @media (max-width: 767.99px) {
+    font-weight: 400;
+    color: $neutral-40;
+  }
 }
 @mixin labelAttritube(){
-  @include textAttritube();
+  font-size: 16px;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: 0.32px;
   font-weight: 700;
+  color: $neutral-0;
 }
 .footer-wrapper {
   background-color: $background;
