@@ -1,0 +1,104 @@
+@mixin textAttritube(){
+  font-size: 16px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: 0.32px;
+  color: $neutral-0;
+}
+@mixin labelAttritube(){
+  @include textAttritube();
+  font-weight: 700;
+}
+.footer-wrapper {
+  background-color: $background;
+  padding: 80px 0 120px 0;
+  @media(max-width: 767.99px) {
+    padding: 80px 0;
+  }
+  .footer {
+    max-width: 1296px;
+    width: 100%;
+    padding: 0 20px;
+    margin: 0 auto;
+    color: $neutral-0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    @media (max-width: 767.99px) {
+      display: block;
+    }
+    .logo-area {
+      & > img {
+        margin-bottom: 40px;
+      }
+      .icon-group > img {
+        padding: 8px;
+        border-radius: 20px;
+        border: 1px solid white;
+        &:first-of-type {
+          margin-right: 16px;
+        }
+      }
+      @media (max-width: 767.99px) {
+        margin-bottom: 40px;
+      }
+    }
+    .info-area {
+      .info-group {
+        display: flex;
+        &:first-of-type {
+          margin-bottom: 40px;
+        }
+        @media (max-width: 767.99px) {
+          display: block;
+          &:first-of-type {
+            margin-bottom: 16px;
+          }
+        }
+      }
+      .info-item {
+        &:nth-of-type(odd) {
+          margin-right: 80px;
+          @media (max-width: 767.99px) {
+            margin-right: 0;
+          }
+        }
+        @media (max-width: 767.99px) {
+          margin-bottom: 16px;
+          &:last-of-type {
+            margin-bottom: 0;
+          }
+        }
+        
+        p {
+          margin-bottom: 0;
+        }
+        .info-item-label {
+          margin-bottom: 8px;
+          @include labelAttritube();
+        }
+        .info-item-value {
+          @include textAttritube();
+        }
+      }
+    }
+    .bottom-area {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 80px;
+      @media (max-width: 767.99px) {
+        flex-direction: column;
+        align-items: flex-start;
+        span:first-of-type {
+          margin-bottom: 16px;
+        }
+      }
+      span {
+        @include textAttritube();
+      }
+    }
+  }
+}
