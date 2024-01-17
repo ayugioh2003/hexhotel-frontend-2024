@@ -1,13 +1,15 @@
-
+import logo from '@/assets/png/logo_white.png';
+import lineIcon from '@/assets/svg/bi_line.svg';
+import igIcon from '@/assets/svg/bi_ins.svg';
 const Footer = () => {
     return (
         <div className="footer-wrapper">
             <div className="footer">
                 <div className="logo-area">
-                    <img src="/src/assets/png/logo_white.png"></img>
+                    <img src={logo}></img>
                     <div className="icon-group">
-                        <img src="/src/assets/svg/bi_line.svg"></img>
-                        <img src="/src/assets/svg/bi_ins.svg"></img>
+                        <img src={lineIcon}></img>
+                        <img src={igIcon}></img>
                     </div>
                 </div>
                 <div className="info-area">
@@ -40,6 +42,5 @@ const Footer = () => {
         </div>
     )
 }
-
 
 export default Footer
