@@ -17,6 +17,7 @@ const Header = () => {
           width: '100%',
           maxHeight: '100vh',
           height: '100vh',
+          filter: 'brightness(40%)'
         }}
         controls={false}
       ></Carousel>
