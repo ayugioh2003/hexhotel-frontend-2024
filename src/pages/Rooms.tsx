@@ -1,44 +1,113 @@
-import Layout from "../components/Layout"
+import Layout from '../components/Layout'
+import Carousel from '@/components/Carousel.tsx'
 
+import sizeImg from '@/assets/svg/ic_Size.svg'
+import bedImg from '@/assets/svg/ic_Bed.svg'
+import personImg from '@/assets/svg/ic_Person.svg'
+import arrowRightImg from '@/assets/svg/ic_ArrowRight.svg'
 
-const Index = () => {
-    return (
-        <Layout>
-            <h1 className="display-1">Rooms</h1>
-            <h1 className="h1">123 100 px  6.25</h1>
-            <h2 className="h2">123  48 px  3</h2>
-            <h3 className="h3">123  40 px  2.5</h3>
-            <h4 className="h4">123  32 px  2</h4>
-            <h5 className="h5">123  28 px  1.75</h5>
-            <h6 className="h6">123  20 px  1.25</h6>
-            <p className="fw-bold">Title 16px B</p>
-            <p className="fw-bold">Subtitle 14px B</p>
-            <p>Body 16px Ｒ</p>
-            <p>Body2 14px R</p>
-            <p className="fs-1">Tiny 12px Ｒ</p>
-            <button className="btn btn-primary">button primary</button>
-            <button className="btn btn-primary disalbed">button primary disable</button>
-            <br />
-            <button className="btn btn-secondary">button secondary</button>
-            <button className="btn btn-secondary disalbed">button secondary disable</button>
-            <br />
-            <button className="btn ">button ghost</button>
-            <button className="btn disabled">button ghost disable</button>
-            <br />
-            <button className="btn btn-link">button text</button>
-            <button className="btn btn-link disabled">button text disable</button>
-            <br />
-            <input type="text" className="form-control" />
-            <input type="text" className="form-control is-invalid" />
-            <div className="invalid-feedback">
-                錯誤提示訊息
-            </div>
-            <select className="form-select">
-                <option value="1">1</option>
-                <option value="2">2</option>
-            </select>
-        </Layout>
-    )
+import { roomsRes } from '@/assets/mockdata/rooms.ts'
+
+const Header = () => {
+  return (<div>
+    <Carousel 
+      imageUrlList={roomsRes.result[0].imageUrlList} 
+      imageStyle={{
+        width: '100%',
+        maxHeight: '100vh',
+        height: '100vh'
+      }}
+      controls={false}
+    ></Carousel>
+  </div>)
 }
 
-export default Index
+const Room = ({ room }: { room: Room }) => {
+  const {
+    imageUrlList,
+    name,
+    description,
+    areaInfo,
+    bedInfo,
+    maxPeople,
+    price,
+  } = room
+
+  return (
+    <div className="room row g-0 ">
+      <div className="col-12 col-md-7 ">
+        <Carousel imageUrlList={imageUrlList} />
+      </div>
+      <div className="col-12 col-md-5 bg-white p-4">
+        <div className="mb-4">
+          <div className="room-title">{name}</div>
+          <div className='room-description'>{description}</div>
+        </div>
+        <div className="d-flex gap-3">
+          <div className="room-info">
+            <div className="room-info__img">
+              <img src={sizeImg} width="24px" height="24px" alt="" />
+            </div>
+            <div className="room-info__text">{areaInfo}</div>
+          </div>
+          <div className="room-info">
+            <div className="room-info__img">
+              <img src={bedImg} width="24px" height="24px" alt="" />
+            </div>
+
+            <div className="room-info__text">{bedInfo}</div>
+          </div>
+          <div className="room-info">
+            <div className="room-info__img">
+              <img src={personImg} width="24px" height="24px" alt="" />
+            </div>
+            <div className="room-info__text">{maxPeople}人</div>
+          </div>
+        </div>
+
+        <div className="room-division my-5"></div>
+
+        <div className="room-action">
+          <div className="room-action__price">NT$ {price}</div>
+          <button className="room-action__btn">
+            <img src={arrowRightImg} alt="" />
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const Rooms = () => {
+  return (
+    <div className="rooms">
+    <div className="container">
+      <div className="rooms-heading">
+        <div className="rooms-title">房型選擇</div>
+        <div className="rooms-description">各種房型，任您調選</div>
+      </div>
+
+      <div>
+        {roomsRes.result.map((room, index) => {
+          return (
+            <div key={index} className="mb-5 rounded-4 overflow-hidden">
+              <Room room={room} />
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  </div>
+  )
+}
+
+const RoomsPage = () => {
+  return (
+    <Layout>
+      <Header />
+      <Rooms />
+    </Layout>
+  )
+}
+
+export default RoomsPage
