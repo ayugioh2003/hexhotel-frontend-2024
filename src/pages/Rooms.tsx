@@ -9,17 +9,29 @@ import arrowRightImg from '@/assets/svg/ic_ArrowRight.svg'
 import { roomsRes } from '@/assets/mockdata/rooms.ts'
 
 const Header = () => {
-  return (<div>
-    <Carousel 
-      imageUrlList={roomsRes.result[0].imageUrlList} 
-      imageStyle={{
-        width: '100%',
-        maxHeight: '100vh',
-        height: '100vh'
-      }}
-      controls={false}
-    ></Carousel>
-  </div>)
+  return (
+    <div className="rooms-header">
+      <Carousel
+        imageUrlList={roomsRes.result[0].imageUrlList}
+        imageStyle={{
+          width: '100%',
+          maxHeight: '100vh',
+          height: '100vh',
+        }}
+        controls={false}
+      ></Carousel>
+
+      <div className='rooms-header__body '>
+        <div className='rooms-header__left '>
+          <div className='rooms-header__title'>享樂酒店</div>
+          <div className='rooms-header__description'>Enjoyment Luxury Hotel</div>
+          <div className='rooms-header__line d-none d-md-block'></div>
+        </div>
+        <div className='rooms-header__line d-block d-md-none '></div>
+        <div className='rooms-header__right '>客房旅宿</div>
+      </div>
+    </div>
+  )
 }
 
 const Room = ({ room }: { room: Room }) => {
@@ -41,7 +53,7 @@ const Room = ({ room }: { room: Room }) => {
       <div className="col-12 col-md-5 bg-white p-4">
         <div className="mb-4">
           <div className="room-title">{name}</div>
-          <div className='room-description'>{description}</div>
+          <div className="room-description">{description}</div>
         </div>
         <div className="d-flex gap-3">
           <div className="room-info">
@@ -81,23 +93,23 @@ const Room = ({ room }: { room: Room }) => {
 const Rooms = () => {
   return (
     <div className="rooms">
-    <div className="container">
-      <div className="rooms-heading">
-        <div className="rooms-title">房型選擇</div>
-        <div className="rooms-description">各種房型，任您調選</div>
-      </div>
+      <div className="container">
+        <div className="rooms-heading">
+          <div className="rooms-title">房型選擇</div>
+          <div className="rooms-description">各種房型，任您調選</div>
+        </div>
 
-      <div>
-        {roomsRes.result.map((room, index) => {
-          return (
-            <div key={index} className="mb-5 rounded-4 overflow-hidden">
-              <Room room={room} />
-            </div>
-          )
-        })}
+        <div>
+          {roomsRes.result.map((room, index) => {
+            return (
+              <div key={index} className="mb-5 rounded-4 overflow-hidden">
+                <Room room={room} />
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
-  </div>
   )
 }
 
