@@ -1,0 +1,265 @@
+.book-room{
+
+  background-color: $primary-20;
+  padding-top: 112px;
+  padding-bottom: 40px;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 170px;
+    padding-bottom: 120px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding-top: 240px;
+  }
+
+  h3 {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 40px;
+    font-size: 24px;
+
+    @include media-breakpoint-up(md) {
+      font-size: 32px;
+    }
+
+    svg {
+      width: 24px;
+      height: 24px;
+      
+      @include media-breakpoint-up(md) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+
+  h4 {
+    font-size: 20px;
+    margin-bottom: 32px;
+
+    @include media-breakpoint-up(md) {
+      font-size: 28px;
+      margin-bottom: 40px;
+    }
+  }
+
+  hr {
+    margin: 40px 0px;
+    color: $neutral-60;
+
+    @include media-breakpoint-up(md) {
+      margin: 47px 0px;
+    }
+  }
+
+  .card{
+    padding: 24px;
+    width: 100%;
+    margin: 0;
+    // width: 478px;
+
+    @include media-breakpoint-up(md) {
+      padding: 40px;
+      width: 90%;
+      margin-left: auto;
+    }
+
+    h4{
+      margin-bottom: 24px;
+    }
+
+    img {
+      margin-bottom: 24px;
+      @include media-breakpoint-up(md) {
+        margin-bottom: 40px;
+      }
+    }
+
+    hr {
+      margin: 24px 0;
+      color: $neutral-60;
+      
+    }
+    &-body{
+      padding: 0;
+    }
+
+    &-title{
+      margin-bottom: 24px;
+    }
+
+    &-content{
+      margin-bottom: 24px;
+      @include media-breakpoint-up(md) {
+        margin-bottom: 40px;
+      }
+    }
+
+    .multiply{
+      display: inline-flex;
+    }
+
+    .price {
+
+    }
+    .discount{
+      span{
+        color: $primary-100;
+      }
+    }
+
+    .total{
+
+    }
+
+    .price, .discount, .total {
+      display: flex;
+      margin-bottom: 12px;
+      align-items: center;
+      span{
+        margin-left: auto;
+      }
+    }
+
+
+    button{
+      width: 100%;
+    }
+  }
+
+}
+
+.booking-info{
+
+  .btn-edit{
+    text-decoration: underline;
+    text-decoration-color: $balck;
+  }
+  &__box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  &__title{
+    height: 24px;
+    padding-left: 12px;
+    margin-bottom: 8px;
+    border-left: 4px solid $primary-100;
+  }
+
+  &__content{
+
+    & p{
+      margin-bottom: 8px;
+    }
+
+    & p + p {
+      margin: 0;
+    }
+    
+  }
+}
+
+.booker{
+  position: relative;
+
+  .btn-member {
+    position: absolute;
+    right: 0;
+    line-height: 40px;
+    color: $primary-100;
+    text-decoration: underline;
+    text-decoration-color: $primary-100;
+  }
+
+  &__box{
+    margin-bottom: 24px;
+  }
+
+  &__title{
+    margin-bottom: 8px;
+    @include media-breakpoint-up(md) {
+      margin-bottom: 16px;
+    }
+    
+  }
+
+  & label.hidden{
+    display: none;
+  }
+
+}
+
+.room-info{
+  margin-bottom: 40px;
+  @include media-breakpoint-up(md) {
+    margin-bottom: 0px;
+  }
+
+  &__title{
+    display: flex;
+    align-items: center;
+    height: 24px;
+    padding-left: 12px;
+    margin-bottom: 16px;
+    border-left: 4px solid $primary-100;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: 24px;
+    }
+
+   h5{
+    font-size: 16px;
+    @include media-breakpoint-up(md) {
+      font-size: 24px;
+    }
+   }
+  }
+
+  &__box {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 24px;
+  }
+
+  &__content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    background-color: white;
+    padding: 20px 24px;
+
+    & li{
+      width: 100px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 4px 0;
+    }
+  }
+
+  &--type{
+    background-color: rgba(0,0,0,0);
+    border-radius: 0;
+    padding: 0;
+  }
+
+  & li.room-info__item {
+    width: 97px;
+    height: 97px;
+    margin-right: 16px;
+    border-radius: 8px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding-top: 20px;
+    padding-left: 16px;
+  }
+
+}
