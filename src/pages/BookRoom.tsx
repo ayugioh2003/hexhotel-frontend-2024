@@ -1,6 +1,5 @@
 import Layout from "@/components/Layout"
 import SvgIcon from '@/components/SvgIcon'
-import { log } from "console"
 
 const BookRoom = () => {
   const roomInfo: { icon:string, text:string }[] = [
