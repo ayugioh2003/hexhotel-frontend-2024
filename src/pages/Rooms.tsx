@@ -1,12 +1,12 @@
-import Layout from '../components/Layout'
-import Carousel from '@/components/Carousel.tsx'
+import Layout from '../components/Layout';
+import Carousel from '@/components/Carousel.tsx';
 
-import sizeImg from '@/assets/svg/ic_Size.svg'
-import bedImg from '@/assets/svg/ic_Bed.svg'
-import personImg from '@/assets/svg/ic_Person.svg'
-import arrowRightImg from '@/assets/svg/ic_ArrowRight.svg'
+import sizeImg from '@/assets/svg/ic_Size.svg';
+import bedImg from '@/assets/svg/ic_Bed.svg';
+import personImg from '@/assets/svg/ic_Person.svg';
+import arrowRightImg from '@/assets/svg/ic_ArrowRight.svg';
 
-import { roomsRes } from '@/assets/mockdata/rooms.ts'
+import { roomsRes } from '@/assets/mockdata/rooms.ts';
 
 const Header = () => {
   return (
@@ -22,29 +22,21 @@ const Header = () => {
         controls={false}
       ></Carousel>
 
-      <div className='rooms-header__body '>
-        <div className='rooms-header__left '>
-          <div className='rooms-header__title'>享樂酒店</div>
-          <div className='rooms-header__description'>Enjoyment Luxury Hotel</div>
-          <div className='rooms-header__line d-none d-md-block'></div>
+      <div className="rooms-header__body ">
+        <div className="rooms-header__left ">
+          <div className="rooms-header__title">享樂酒店</div>
+          <div className="rooms-header__description">Enjoyment Luxury Hotel</div>
+          <div className="rooms-header__line d-none d-md-block"></div>
         </div>
-        <div className='rooms-header__line d-block d-md-none '></div>
-        <div className='rooms-header__right '>客房旅宿</div>
+        <div className="rooms-header__line d-block d-md-none "></div>
+        <div className="rooms-header__right ">客房旅宿</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Room = ({ room }: { room: Room }) => {
-  const {
-    imageUrlList,
-    name,
-    description,
-    areaInfo,
-    bedInfo,
-    maxPeople,
-    price,
-  } = room
+  const { imageUrlList, name, description, areaInfo, bedInfo, maxPeople, price } = room;
 
   return (
     <div className="room row g-0 ">
@@ -88,8 +80,8 @@ const Room = ({ room }: { room: Room }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const Rooms = () => {
   return (
@@ -106,13 +98,13 @@ const Rooms = () => {
               <div key={index} className="mb-5 rounded-4 overflow-hidden">
                 <Room room={room} />
               </div>
-            )
+            );
           })}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const RoomsPage = () => {
   return (
@@ -120,7 +112,7 @@ const RoomsPage = () => {
       <Header />
       <Rooms />
     </Layout>
-  )
-}
+  );
+};
 
-export default RoomsPage
+export default RoomsPage;
