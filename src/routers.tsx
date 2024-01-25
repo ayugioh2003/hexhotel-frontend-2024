@@ -3,6 +3,7 @@ import Index from '@/pages/Index.tsx'
 import Login from '@/pages/Login.tsx'
 import Register from "@/pages/Register.tsx"
 import Member from "@/pages/Member.tsx"
+import Rooms from '@/pages/Rooms.tsx'
 import NotFound from "@/pages/NotFound.tsx"
 import BookRoom from "@/pages/BookRoom.tsx"
 import { AuthRoute, NonAuthRoute } from '@/components/PrivateRoute.tsx'
@@ -16,6 +17,10 @@ const routers = createHashRouter([
     {
         path: "Index",
         element: <Index />,
+    },
+    {
+        path: "/Rooms",
+        element: <Rooms />,
     },
     {
         path: "/",
