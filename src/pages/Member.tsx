@@ -26,7 +26,7 @@ const Member = () => {
     <Layout>
       <div className="member">
         <div className="hero-area">
-          <div className="hero-area-wrapper">
+          <div className="hero-area-wrapper container">
             <SvgIcon name="svg/ic_user" className="hero-area-icon"></SvgIcon>
             <p className="hero-area-text tw-text-white tw-font-[700] tw-text-[32px] md:tw-text-[48px] tw-tracking-[1.6px] md:tw-tracking-[2.4px]">
               Hello，Leo
