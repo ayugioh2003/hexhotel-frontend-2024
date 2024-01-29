@@ -8,6 +8,7 @@ import Layout from '@/components/Layout';
 import { Outlet } from 'react-router-dom';
 import SvgIcon from '@/components/SvgIcon';
 import SectionTab from '@/components/SectionTab';
+import bottomLineSource from '@/assets/svg/bi_bottom_line.svg';
 const Member = () => {
   const sectionList: SectionItem[] = [
     {
@@ -36,7 +37,12 @@ const Member = () => {
         <div className="tab-area container">
           <SectionTab sectionList={sectionList} activeItemValue={activeItem} onChange={setActiveItem} />
         </div>
-        <Outlet />
+        <div className="main-area">
+          <Outlet />
+        </div>
+        <div className="bottom-line-wrapper">
+          <img className="bottom-line" width={'100%'} src={bottomLineSource} object-fit="cover" />
+        </div>
       </div>
     </Layout>
   );

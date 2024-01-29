@@ -2,11 +2,9 @@
 @import '../text';
 .member-info {
   .container {
-    background: $black;
+    background: $background;
     color: $white;
-    display: flex;
     .row {
-      width: 100%;
       @include media-breakpoint-down(md) {
         display: block;
         & > div {
