@@ -74,5 +74,137 @@ npm run build
   - <font color=#3BADEF>info   info-100</font>
   - <font color=#DA3E51>danger   danger-100</font>
 
+## 呼叫 API 
+此專案使用 `axios` 呼叫 API，並封裝 `get`、`post`、`put`、`delete` 方法，範例如下
+```typescript
+const get = async <TResponse>(url: string, token: string | undefined = undefined): Promise<TResponse> => {
+    const response = await axios.get<TResponse>(url, {
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+        }
+    })
+    return response.data
+}
+
+const post = async <TResponse>(url: string, request: any, token: string | undefined = undefined): Promise<TResponse> => {
+    const response = await axios.post<TResponse>(url, request, {
+        headers: {
+            'Content-Type': 'application/json',
+            'authorization': token,
+        }
+    })
+    return response.data
+}
+```
+get function 有兩個參數
+- API Url
+- token (若 API 需要 token 驗證時才需此參數)
+
+post function 有三個參數
+- API Url
+- request data
+- token (若 API 需要 token 驗證時才需此參數)
+
+皆定義 `Content-Type` 為 `application/json`，回傳型態為 `TResponse`，泛型可依據不同 API 定義各自回傳型態。
+
+若 API 失敗（StatusCode = `4XX` or `5XX`)，統一拋出例外，格式如下：
+```typescript
+interface ApiError {
+    status: string;
+    message: string;
+}
+```
+
+將呼叫 API 方法寫在 `./src/services` 中，檔案名稱習慣上以 `Service` 結尾如：
+`UserService.ts`。
+function 傳入傳出型態可定義 interface 或 type，回傳型態為 `Promise<Ｔ>`
+```typescript 
+interface LoginRequest {}
+interface LoginResponse {}
+
+const login = async (request: LoginRequest): Promise<LoginResponse> => {
+    const repsonse = await post<LoginResponse>(`${config.baseURL}/api/v1/user/login`, request)
+    return repsonse
+}
+```
+
+在 React 使用時，若使用 async await 需加上 `try catch`，catch 觸發條件為 StatusCode 4XX 或 5XX，ex 型態為 `ApiError`
+
+```typescript
+try {
+    const data = {
+        "email": "aaaaaa@gmail.com",
+        "password": "aaaaaaaa"
+    }
+    await login(data)            
+}
+catch(ex) {
+    console.error(ex)
+}
+```
+
+## Zustand 用法
+### 定義 State 結構
+Typescript 中需要先定義 state 的結構，包含了 `狀態` 以及 `更新狀態的 function`
+```typescript
+interface CountState {
+    count: number;
+    addCount: () => void;
+    setCount: (count: number) => void;
+}
+```
+
+### 建立 Store
+建立全域 state，習慣上稱呼為 store。所產生的 store 是個 hook，因此習慣上以 `useXXXStore` 形式命名。
+```typescript
+const useCountStore = create<CountState>((set, get) => ({
+    count: 0,
+    addCount: () => set(state => ({ count: state.count + 1 })),
+    setCount: (count) => set(() => ({count}))
+}))
+```
+建立時需要給 state 初始（預設）值，因此 count 為 0。
+
+addCount、setCount 為更新狀態的 function，使用 `set` 更新 state，上面範例是 arrow function 寫法，傳統 function 寫法如下：
+```typescript
+addCount: function () {
+    set(function (state) {
+        return { 
+            count: state.count + 1 
+        }
+    })
+},
+
+setCount: (newCount) => {
+    return set(() => ({ 
+        count: newCount 
+    })
+)},
+```
+`addCount` 執行時將 state 中 count + 1，set function 裡面的 `state` 是目前 store 的值，回傳物件裡頭有 count，值為 `state.count + 1`。
+
+`setCount` 執行時將 state 中 count 改為 `newCount`。由於不需要目前的 count，因此不用 set function 裡面的 `state`。回傳物件裡頭有 count，值為 `newCount`。
+
+### 使用 Store
+使用時呼叫 useCountStore 並回傳所需要的欄位 `s => s.count` 後即可使用
+```typescript
+const Sample = () => {
+    const count = useCountStore(s => s.count)
+    const addCount = useCountStore(s => s.addCount)
+
+    const handleAddCount = () => {
+        addCount()
+    }
+
+    return (
+        <button type='button' onClick={handleAddCount}>{count}</button>
+    )
+}
+```
+
+### 補充
+範例程式可以參考 `./src/store/sample.tsx`
+
 ## 參考連結
 [resolve.alias](https://dev.to/avxkim/setup-path-aliases-w-react-vite-ts-poa)
