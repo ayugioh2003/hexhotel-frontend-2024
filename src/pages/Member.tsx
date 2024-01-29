@@ -33,7 +33,7 @@ const Member = () => {
             </p>
           </div>
         </div>
-        <div className="tab-area">
+        <div className="tab-area container">
           <SectionTab sectionList={sectionList} activeItemValue={activeItem} onChange={setActiveItem} />
         </div>
         <Outlet />
