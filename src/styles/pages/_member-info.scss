@@ -1,0 +1,71 @@
+@import '../variables';
+@import '../text';
+.member-info {
+  .container {
+    background: $black;
+    color: $white;
+    display: flex;
+    .row {
+      width: 100%;
+      @include media-breakpoint-down(md) {
+        display: block;
+        & > div {
+          width: 100%;
+          &:first-of-type {
+            margin-bottom: 24px;
+          }
+        }
+      }
+    }
+    .basic-info {
+      flex: 5;
+    }
+    .advanced-infp {
+      flex: 7;
+    }
+    .card {
+      border-radius: 20px;
+      background: $white;
+      padding: 40px;
+      &-title {
+        @include tw-text-h5();
+        margin-bottom: 40px;
+      }
+      &-item {
+        margin-bottom: 24px;
+        position: relative;
+        &-label {
+          margin-bottom: 8px;
+          color: $neutral-80;
+          @include tw-text-body();
+        }
+        &-value {
+          @include tw-text-title();
+          .password-node-wrapper {
+            display: flex;
+            padding: 8px 0;
+            .password-node {
+              display: block;
+              width: 8px;
+              height: 8px;
+              border-radius: 4px;
+              background: $neutral-100;
+              margin-right: 8px;
+            }
+          }
+        }
+        .prefix-item {
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translateY(-50%);
+          color: $primary-100;
+          text-decoration: underline;
+        }
+        .btn {
+          width: auto;
+        }
+      }
+    }
+  }
+}
