@@ -4,7 +4,7 @@ const MemberInfo = () => {
   let PasswordNode: React.FC = () => {
     let template = [];
     for (let i = 0; i < 8; i++) {
-      template.push(<i className="password-node"></i>);
+      template.push(<i key={i} className="password-node"></i>);
     }
     return <div className="password-node-wrapper">{template}</div>;
   };
