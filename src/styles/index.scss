@@ -54,9 +54,7 @@
 // scss-docs-end import-stack
 @import "./footer";
 @import "./header";
-
-// BookRoom
-@import "./book-room";
+@import "./dialog-msg";
 
 h6,
 .h6,
@@ -80,5 +78,13 @@ body {
 // pages
 @import './pages/rooms';
 
+/* BookRoom */
+@import "./pages/book-room";
+
+/* BookingSuccess */
+@import "./pages/booking-success";
+
+
 // bs-custom
 @import './bs-custom/index';
+

@@ -6,6 +6,7 @@ import Member from "@/pages/Member.tsx"
 import Rooms from '@/pages/Rooms.tsx'
 import NotFound from "@/pages/NotFound.tsx"
 import BookRoom from "@/pages/BookRoom.tsx"
+import BookingSuccess from "@/pages/BookingSuccess.tsx"
 import { AuthRoute, NonAuthRoute } from '@/components/PrivateRoute.tsx'
 
 
@@ -39,6 +40,16 @@ const routers = createHashRouter([
             {
                 path: "/BookRoom",
                 element: <BookRoom />,
+            },
+        ]
+    },
+    {
+        path: "/",
+        // element: <AuthRoute />,
+        children: [
+            {
+                path: "/BookingSuccess",
+                element: <BookingSuccess />,
             },
         ]
     },
