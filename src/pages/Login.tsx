@@ -19,10 +19,6 @@ const Login = () => {
     }
 
     const handleLogin = async () => {
-        navigate('/index', { state: {
-            data: 123
-        }})
-
         try {
             const response = await login({
                 email, password
