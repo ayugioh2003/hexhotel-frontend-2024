@@ -1,9 +1,10 @@
-import { createHashRouter } from 'react-router-dom';
+import { createHashRouter, Navigate } from 'react-router-dom';
 import Index from '@/pages/Index.tsx';
 import Login from '@/pages/Login.tsx';
 import Register from '@/pages/Register.tsx';
 import Member from '@/pages/Member.tsx';
 import MemberInfo from '@/pages/Member/Info';
+import MemberOrder from '@/pages/Member/Order';
 import Rooms from '@/pages/Rooms.tsx';
 import Room from '@/pages/Room.tsx';
 import NotFound from '@/pages/NotFound.tsx';
@@ -37,8 +38,16 @@ const routers = createHashRouter([
         element: <Member />,
         children: [
           {
-            path: 'info',
+            path: 'Info',
             element: <MemberInfo />
+          },
+          {
+            path: 'Order',
+            element: <MemberOrder />
+          },
+          {
+            path: '',
+            element: <Navigate to="Info" />
           }
         ]
       }

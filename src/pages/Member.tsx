@@ -3,13 +3,22 @@ interface SectionItem {
   label: string;
   value: string;
 }
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '@/components/Layout';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import SvgIcon from '@/components/SvgIcon';
 import SectionTab from '@/components/SectionTab';
 import bottomLineSource from '@/assets/svg/bi_bottom_line.svg';
+
 const Member = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [activeItem, setActiveItem] = useState('0');
+  useEffect(() => {
+    if (location.pathname == '/member/order') {
+      setActiveItem('1');
+    }
+  }, []);
   const sectionList: SectionItem[] = [
     {
       id: '1',
@@ -22,7 +31,14 @@ const Member = () => {
       value: '1'
     }
   ];
-  const [activeItem, setActiveItem] = useState('0');
+  const changeActiveItem = (activeItemValue: string) => {
+    if (activeItemValue == '0') {
+      navigate('/member/info');
+    } else if (activeItemValue == '1') {
+      navigate('/member/order');
+    }
+    setActiveItem(activeItemValue);
+  };
   return (
     <Layout>
       <div className="member">
@@ -35,7 +51,7 @@ const Member = () => {
           </div>
         </div>
         <div className="tab-area container">
-          <SectionTab sectionList={sectionList} activeItemValue={activeItem} onChange={setActiveItem} />
+          <SectionTab sectionList={sectionList} activeItemValue={activeItem} onChange={e => changeActiveItem(e)} />
         </div>
         <div className="main-area">
           <Outlet />
