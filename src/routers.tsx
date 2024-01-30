@@ -25,6 +25,10 @@ const routers = createHashRouter([
     element: <Rooms />
   },
   {
+    path: '/Room/:id',
+    element: <Room />
+  },
+  {
     path: '/',
     element: <AuthRoute />,
     children: [
