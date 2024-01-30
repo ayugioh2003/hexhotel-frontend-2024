@@ -52,6 +52,7 @@
 // Utilities
 @import 'node_modules/bootstrap/scss/utilities/api';
 // scss-docs-end import-stack
+
 @import "./footer";
 @import "./header";
 @import "./dialog-msg";
@@ -74,9 +75,12 @@ h1,
 body {
   //    background: $background;
 }
-
+// text
+@import './text';
 // pages
 @import './pages/rooms';
+@import './pages/member';
+@import './pages/member-info';
 
 /* BookRoom */
 @import "./pages/book-room";

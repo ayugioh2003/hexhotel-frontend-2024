@@ -1,44 +1,42 @@
-import { useNavigate, Outlet } from "react-router-dom"
-import { useEffect, useState } from "react";
-
-const loginStatus = false
+import { useNavigate, Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+const loginStatus = true;
 
 const AuthRoute = () => {
-    const [isLogin] = useState<boolean>(loginStatus)
-    const navigate = useNavigate()
+  const [isLogin] = useState<boolean>(loginStatus);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        console.log('AuthRoute', isLogin)
-        if (!isLogin) {
-            navigate('/login')
-        }
-    }, [])
+  useEffect(() => {
+    console.log('AuthRoute', isLogin);
+    if (!isLogin) {
+      navigate('/login');
+    }
+  }, []);
 
-    return (
-        <>
-            Auth Route
-            <Outlet />        
-        </>
-    )
-}
+  return (
+    <>
+      <Outlet />
+    </>
+  );
+};
 
 const NonAuthRoute = () => {
-    const [isLogin] = useState<boolean>(loginStatus)
+  const [isLogin] = useState<boolean>(loginStatus);
 
-    const navigate = useNavigate()
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (isLogin) {
-            navigate('/index')
-        }
-    }, [])
+  useEffect(() => {
+    if (isLogin) {
+      navigate('/index');
+    }
+  }, []);
 
-    return (
-        <>
-            Non Auth Route
-            <Outlet />        
-        </>
-    )
-}
+  return (
+    <>
+      Non Auth Route
+      <Outlet />
+    </>
+  );
+};
 
-export { AuthRoute, NonAuthRoute }
+export { AuthRoute, NonAuthRoute };

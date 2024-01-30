@@ -1,0 +1,42 @@
+@import '../variables';
+@import '../text';
+@mixin itemChangeColor() {
+  .section-tab-item-label {
+    color: $primary-100;
+  }
+  .section-tab-item-devider {
+    background-color: $primary-100;
+  }
+}
+.section-tab {
+  display: flex;
+  padding-left: 0;
+  margin: 0 -0.75rem;
+  &-item {
+    position: relative;
+    display: inline-flex;
+    padding: 16px 24px;
+    cursor: pointer;
+    color: $white;
+    &-label {
+      margin-bottom: 0;
+      @include tw-text-title();
+    }
+    &-devider {
+      position: absolute;
+      left: 50%;
+      bottom: 4px;
+      transform: translateX(-50%);
+      width: 32px;
+      height: 4px;
+      border-radius: 10px;
+    }
+    &:hover {
+      @include itemChangeColor();
+    }
+    &.active {
+      cursor: default;
+      @include itemChangeColor();
+    }
+  }
+}
