@@ -44,6 +44,16 @@ const routers = createHashRouter([
     // element: <AuthRoute />,
     children: [
       {
+        path: '/BookRoom',
+        element: <BookRoom />
+      }
+    ]
+  },
+  {
+    path: '/',
+    // element: <AuthRoute />,
+    children: [
+      {
         path: '/BookingSuccess',
         element: <BookingSuccess />
       }
