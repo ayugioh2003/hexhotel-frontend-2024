@@ -1,0 +1,240 @@
+.booking-success{
+  background-color: $background;
+  padding-top: 112px;
+  padding-bottom: 40px;
+
+  @include media-breakpoint-up(md) {
+    padding-top: 170px;
+    padding-bottom: 120px;
+  }
+
+  @include media-breakpoint-up(lg) {
+    padding-top: 240px;
+  }
+  
+  &.bg-deco {
+    width: 100%;
+    padding-bottom: 124px;
+    background-image: url('/Deco.svg');
+    background-repeat: repeat-x;
+    background-position: center bottom;
+    background-size: auto 84px;
+
+    @include media-breakpoint-up(md) {
+      padding-bottom: 308px;
+      background-size: auto 188px;
+    }
+
+  }
+
+  .booking-result{
+
+    &:last-child{
+      margin-bottom: 60px;
+      @include media-breakpoint-up(md) {
+        margin-bottom: 0;
+      }
+    }
+    
+    & h5{
+      color: $white;
+      margin-bottom: 24px;
+      font-size: 16px;
+
+      @include media-breakpoint-up(md) {
+        font-size: 24px;
+        margin-bottom: 40px;
+      }
+    }
+
+    & .btn {
+      width: 100%;
+      @include media-breakpoint-up(md) {
+        width: auto;
+      }
+    }
+
+    &__message{
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 32px;
+
+      @include media-breakpoint-up(md) {
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 40px;
+        
+      }
+
+      & svg{
+        width: 40px;
+        height: 40px;
+        border-radius: 40px;
+        padding: 8px;
+        background-color: $success;
+        margin-bottom: 16px;
+        flex-shrink: 0;
+        @include media-breakpoint-up(md) {
+          width: 56px;
+          height: 56px;
+          border-radius: 56px;
+          margin-right: 40px;
+          margin-bottom: 0;
+        }
+      }
+
+      & p {
+        font-size: $h3-font-size;
+        color: $white;
+        @include media-breakpoint-up(md) {
+          font-size: $h1-font-size;
+        }
+      }
+
+    }
+
+    &__text{
+      color: $white;
+      font-size: $font-size-base;
+    }
+
+    &__booker{
+      margin: 0;
+      padding: 0;
+
+      h5 {
+        font-size: 24px;
+        color: $white;
+        margin-bottom: 32px;
+  
+        @include media-breakpoint-up(md) {
+          margin-bottom: 40px;
+        }
+      }
+
+      & li {
+        margin-bottom: 24px;
+      }
+
+      & .title{
+        color: $neutral-40;
+        margin-bottom: 8px;
+      }
+      & .text{
+        color: $neutral-0;
+      }
+    }
+
+  }
+
+  hr {
+    margin: 40px 0px;
+    color: $white;
+
+    @include media-breakpoint-up(md) {
+      margin: 80px 0px;
+    }
+  }
+
+  .card{
+    background-color: $white;
+    padding: 24px;
+    width: 100%;
+    margin: 0;
+
+    @include media-breakpoint-up(md) {
+      padding: 40px;
+      width: 90%;
+      margin-left: auto;
+    }
+
+    img {
+      margin-bottom: 24px;
+      border-radius: 8px;
+      @include media-breakpoint-up(md) {
+        margin-bottom: 40px;
+      }
+    }
+
+    hr {
+      margin: 24px 0;
+      color: $neutral-60;
+      @include media-breakpoint-up(md) {
+        margin: 40px 0;
+      }
+      
+    }
+   
+    &-head{
+      p {
+        color: $neutral-80;
+        font-size: 14px;
+        margin-bottom: 8px;
+        @include media-breakpoint-up(md) {
+          font-size: 16px;
+        }
+      }
+
+      h5 {
+        font-size: 16px;
+        margin-bottom: 24px;
+        @include media-breakpoint-up(md) {
+          font-size: 24px;
+          margin-bottom: 40px;
+        }
+      }
+    }
+
+    &-body{
+      padding: 0;
+    }
+
+    .booking-info{
+
+      &__title{
+        font-size: 14px;
+        color:$neutral-80;
+        margin-bottom: 24px;
+        @include media-breakpoint-up(md) {
+          font-size: 20px;
+        }
+      }
+
+      &__title span{
+        color:$neutral-60;
+      }
+
+      &__content {
+        margin-bottom: 24px;
+      }
+
+      &__content p {
+        color:$neutral-80;
+        padding-left: 12px;
+        border-left: 4px solid $primary-100;
+        margin-bottom: 8px;
+        font-size: 14px;
+        @include media-breakpoint-up(md) {
+          font-size: 16px;
+        }
+
+        &:last-child{
+          border-left: 4px solid $neutral-60;
+        }
+      }
+
+      
+
+    }
+
+  }
+
+  
+
+  p {
+    margin: 0;
+  }
+
+
+}
+
