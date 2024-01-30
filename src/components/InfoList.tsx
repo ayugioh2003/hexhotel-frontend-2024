@@ -11,7 +11,7 @@ export default function InfoList({
 }:InfoListProps) {
 
   return(
-    <div className={className}>
+    <ul className={className}>
       {
         data.map((item) => {
           return (
@@ -21,7 +21,7 @@ export default function InfoList({
           </li>)
         })
       }
-    </div>
+    </ul>
   )
   
 }

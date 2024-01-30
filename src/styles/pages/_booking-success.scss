@@ -73,6 +73,7 @@
         padding: 8px;
         background-color: $success;
         margin-bottom: 16px;
+        flex-shrink: 0;
         @include media-breakpoint-up(md) {
           width: 56px;
           height: 56px;
