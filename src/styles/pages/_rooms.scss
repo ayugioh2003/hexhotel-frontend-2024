@@ -10,7 +10,6 @@
 
   &-header {
     position: relative;
-    
 
     &__body {
       position: absolute;
@@ -53,7 +52,7 @@
     }
 
     &__right {
-      color: var(--Neutral-0, #FFF);
+      color: var(--Neutral-0, #fff);
       font-size: 48px;
       font-weight: 700;
 
@@ -64,18 +63,16 @@
 
     &__line {
       width: 500px;
-height: 2px;
-background: linear-gradient(90deg, #BE9C7C 0%, #FFF 100%);
+      height: 2px;
+      background: linear-gradient(90deg, #be9c7c 0%, #fff 100%);
 
-
-@include media-breakpoint-down(md) {
-  width: 2px;
-height: 83px;
-background: linear-gradient(90deg, #BE9C7C 0%, #FFF 100%);
-margin-bottom: 40px;
-}
+      @include media-breakpoint-down(md) {
+        width: 2px;
+        height: 83px;
+        background: linear-gradient(90deg, #be9c7c 0%, #fff 100%);
+        margin-bottom: 40px;
+      }
     }
-
   }
 
   &-heading {
