@@ -1,4 +1,3 @@
-import { useEffect } from "react"
 import Layout from "../components/Layout"
 import useUserStore from "@/store/useUserStore"
 import useCheckUser from "@/hooks/useCheckUser"

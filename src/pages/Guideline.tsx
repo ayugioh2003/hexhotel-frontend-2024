@@ -1,6 +1,5 @@
-import { useEffect } from "react"
 import Layout from "../components/Layout"
-import { login, check } from "@/services/UserService"
+import { login } from "@/services/UserService"
 import useUserStore from "@/store/useUserStore"
 
 const Index = () => {

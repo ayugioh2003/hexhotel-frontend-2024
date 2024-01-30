@@ -16,10 +16,15 @@ const useCountStore = create<CountState>((set, get) => ({
     // 建立時會給每個 state 初始(預設）值
     count: 0,
 
+    // 取得 count 值
+    getCount: function () {
+        return get().count
+    },
+
     // addCount 是個 function 用於更新 count 的值
     // 更新時將 count 的值 +1
     // 使用 set 更新 store 的值
-    // 參數 state 為 sotre 目前的值
+    // 參數 state 為 store 目前的值
     // 回傳要更新的欄位 { count }，值為目前 state 裡 count + 1
     addCount: function () {
         set(function (state) {
@@ -44,7 +49,7 @@ const useCountStore = create<CountState>((set, get) => ({
     // setCount: (count) => set(() => ({count}))
 }))
 
-const Sample = () => {
+export const Sample = () => {
     // 使用時呼叫該 hook，並回傳所需的狀態或 function 即可使用
     const count = useCountStore(s => s.count)
     const addCount = useCountStore(s => s.addCount)

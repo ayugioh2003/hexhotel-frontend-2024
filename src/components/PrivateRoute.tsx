@@ -1,5 +1,5 @@
 import { useNavigate, Outlet } from "react-router-dom"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import useUserStore from "@/store/useUserStore";
 
