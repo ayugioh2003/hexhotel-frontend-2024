@@ -128,72 +128,72 @@
     }
   }
 
-}
-
-.booking-info{
-
-  .btn-edit{
-    text-decoration: underline;
-    text-decoration-color: $balck;
-  }
-  &__box {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-  }
-
-  &__title{
-    height: 24px;
-    padding-left: 12px;
-    margin-bottom: 8px;
-    border-left: 4px solid $primary-100;
-  }
-
-  &__content{
-
-    & p{
+  .booking-info{
+  
+    .btn-edit{
+      text-decoration: underline;
+      text-decoration-color: $balck;
+    }
+    &__box {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+  
+    &__title{
+      height: 24px;
+      padding-left: 12px;
       margin-bottom: 8px;
+      border-left: 4px solid $primary-100;
     }
-
-    & p + p {
-      margin: 0;
+  
+    &__content{
+  
+      & p{
+        margin-bottom: 8px;
+      }
+  
+      & p + p {
+        margin: 0;
+      }
+      
     }
-    
+  }
+  
+  .booker{
+    position: relative;
+  
+    .btn-member {
+      position: absolute;
+      right: 0;
+      line-height: 40px;
+      color: $primary-100;
+      text-decoration: underline;
+      text-decoration-color: $primary-100;
+    }
+  
+    &__box{
+      margin-bottom: 24px;
+    }
+  
+    &__title{
+      margin-bottom: 8px;
+      @include media-breakpoint-up(md) {
+        margin-bottom: 16px;
+      }
+      
+    }
+  
+    & label.hidden{
+      display: none;
+    }
+  
   }
 }
 
-.booker{
-  position: relative;
-
-  .btn-member {
-    position: absolute;
-    right: 0;
-    line-height: 40px;
-    color: $primary-100;
-    text-decoration: underline;
-    text-decoration-color: $primary-100;
-  }
-
-  &__box{
-    margin-bottom: 24px;
-  }
-
-  &__title{
-    margin-bottom: 8px;
-    @include media-breakpoint-up(md) {
-      margin-bottom: 16px;
-    }
-    
-  }
-
-  & label.hidden{
-    display: none;
-  }
-
-}
-
+// BookRoom & BookingSuccess 
 .room-info{
   margin-bottom: 40px;
   @include media-breakpoint-up(md) {
@@ -224,6 +224,10 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 24px;
+
+    &:last-child{
+      margin-bottom: 0;
+    }
   }
 
   &__content{
@@ -241,6 +245,14 @@
       align-items: center;
       margin: 4px 0;
     }
+
+    & span {
+      color: $neutral-80;
+    }
+  }
+
+  &__content--border{
+    border:1px solid $neutral-40;
   }
 
   &--type{
