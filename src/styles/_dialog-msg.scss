@@ -1,0 +1,44 @@
+.dialog-msg{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    z-index: 9;
+    margin: auto;
+
+  dialog {
+    width: 95%;
+    height: 60%;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 20px;
+ 
+    @include media-breakpoint-up(md) {
+      width: 55%;
+      height: 70%;
+    }
+
+  
+  }
+
+  .lottie {
+    height: 65px;
+    margin-bottom: 40px;
+  }
+
+  .logo {
+    width: 145px;
+    height: 53px;
+    margin-bottom: 16px;
+  }
+
+  h5 {
+    font-size: 24px;
+  }
+}

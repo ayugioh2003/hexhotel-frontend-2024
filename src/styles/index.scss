@@ -52,11 +52,10 @@
 // Utilities
 @import 'node_modules/bootstrap/scss/utilities/api';
 // scss-docs-end import-stack
-@import './footer';
-@import './header';
 
-// BookRoom
-@import './book-room';
+@import "./footer";
+@import "./header";
+@import "./dialog-msg";
 
 h6,
 .h6,
@@ -83,5 +82,13 @@ body {
 @import './pages/member';
 @import './pages/member-info';
 
+/* BookRoom */
+@import "./pages/book-room";
+
+/* BookingSuccess */
+@import "./pages/booking-success";
+
+
 // bs-custom
 @import './bs-custom/index';
+
