@@ -1,42 +1,46 @@
-import { useNavigate, Outlet } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-const loginStatus = true;
+import { useNavigate, Outlet } from "react-router-dom"
+import { useEffect } from "react";
+
+import useUserStore from "@/store/useUserStore";
 
 const AuthRoute = () => {
-  const [isLogin] = useState<boolean>(loginStatus);
-  const navigate = useNavigate();
+    //const [isLogin] = useState<boolean>(loginStatus)
+    const navigate = useNavigate()
+    const token = useUserStore(s => s.token)
 
-  useEffect(() => {
-    console.log('AuthRoute', isLogin);
-    if (!isLogin) {
-      navigate('/login');
-    }
-  }, []);
+    console.log(token)
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
-};
+    useEffect(() => {
+        if (!token) {
+            navigate('/login')
+        }
+    }, [])
+
+    return (
+        <>
+            <Outlet />        
+        </>
+    )
+}
 
 const NonAuthRoute = () => {
-  const [isLogin] = useState<boolean>(loginStatus);
+    //const [isLogin] = useState<boolean>(loginStatus)
+    const token = useUserStore(s => s.token)
+    const navigate = useNavigate()
 
-  const navigate = useNavigate();
+    console.log(token)
 
-  useEffect(() => {
-    if (isLogin) {
-      navigate('/index');
-    }
-  }, []);
+    useEffect(() => {
+        if (token) {
+            navigate('/index')
+        }
+    }, [])
 
-  return (
-    <>
-      Non Auth Route
-      <Outlet />
-    </>
-  );
-};
+    return (
+        <>
+            <Outlet />        
+        </>
+    )
+}
 
 export { AuthRoute, NonAuthRoute };
