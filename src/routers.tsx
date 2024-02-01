@@ -5,6 +5,7 @@ import Register from '@/pages/Register.tsx';
 import Member from '@/pages/Member.tsx';
 import MemberInfo from '@/pages/Member/Info';
 import Rooms from '@/pages/Rooms.tsx';
+import Room from '@/pages/Room.tsx';
 import NotFound from '@/pages/NotFound.tsx';
 import BookRoom from '@/pages/BookRoom.tsx';
 import BookingSuccess from '@/pages/BookingSuccess.tsx';
@@ -22,6 +23,10 @@ const routers = createHashRouter([
   {
     path: '/Rooms',
     element: <Rooms />
+  },
+  {
+    path: '/Room/:id',
+    element: <Room />
   },
   {
     path: '/',
