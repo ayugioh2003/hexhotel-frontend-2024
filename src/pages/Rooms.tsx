@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Layout from '../components/Layout';
 import Carousel from '@/components/Carousel.tsx';
 
@@ -36,7 +37,7 @@ const Header = () => {
 };
 
 const Room = ({ room }: { room: Room }) => {
-  const { imageUrlList, name, description, areaInfo, bedInfo, maxPeople, price } = room;
+  const { imageUrlList, name, description, areaInfo, bedInfo, maxPeople, price, _id } = room;
 
   return (
     <div className="room row g-0 ">
@@ -74,9 +75,11 @@ const Room = ({ room }: { room: Room }) => {
 
         <div className="room-action">
           <div className="room-action__price">NT$ {price}</div>
-          <button className="room-action__btn">
-            <img src={arrowRightImg} alt="" />
-          </button>
+          <Link to={`/Room/${_id}`}>
+            <button className="room-action__btn">
+              <img src={arrowRightImg} alt="" />
+            </button>
+          </Link>
         </div>
       </div>
     </div>
