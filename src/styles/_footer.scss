@@ -1,4 +1,4 @@
-@mixin textAttritube(){
+@mixin textAttritube() {
   font-size: 16px;
   font-style: normal;
   line-height: 1.5;
@@ -6,12 +6,12 @@
   font-weight: 400;
   color: $neutral-40;
   color: $neutral-0;
-  @media (min-width: 768px) {
+  @include media-breakpoint-up(md) {
     font-weight: 500;
     color: $neutral-0;
   }
 }
-@mixin labelAttritube(){
+@mixin labelAttritube() {
   font-size: 16px;
   font-style: normal;
   line-height: 1.5;
@@ -22,17 +22,17 @@
 .footer-wrapper {
   background-color: $background;
   padding: 80px 0;
-  @media(min-width: 768px) {
+  @include media-breakpoint-up(md) {
     padding: 80px 0 120px 0;
   }
   .footer {
-    max-width: 1296px;
+    max-width: 1320px;
     width: 100%;
     padding: 0 20px;
     margin: 0 auto;
     color: $neutral-0;
     display: block;
-    @media (min-width: 768px) {
+    @include media-breakpoint-up(md) {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
@@ -50,17 +50,17 @@
         }
       }
       margin-bottom: 40px;
-      @media (min-width: 768px) {
+      @include media-breakpoint-up(md) {
         margin-bottom: 0;
       }
     }
     .info-area {
       .info-group {
         display: block;
-          &:first-of-type {
-            margin-bottom: 16px;
-          }
-        @media (min-width: 768px) {
+        &:first-of-type {
+          margin-bottom: 16px;
+        }
+        @include media-breakpoint-up(md) {
           display: flex;
           &:first-of-type {
             margin-bottom: 40px;
@@ -70,7 +70,7 @@
       .info-item {
         &:nth-of-type(odd) {
           margin-right: 0;
-          @media (min-width: 768px) {
+          @include media-breakpoint-up(md) {
             margin-right: 80px;
           }
         }
@@ -78,10 +78,10 @@
         &:last-of-type {
           margin-bottom: 0;
         }
-        @media (min-width: 768px) {
+        @include media-breakpoint-up(md) {
           margin-bottom: 0;
         }
-        
+
         p {
           margin-bottom: 0;
         }
@@ -104,10 +104,9 @@
       span:first-of-type {
         margin-bottom: 16px;
       }
-      @media (min-width: 768px) {
+      @include media-breakpoint-up(md) {
         flex-direction: row;
         align-items: center;
-        
       }
       span {
         @include textAttritube();

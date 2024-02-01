@@ -1,0 +1,89 @@
+@import '../variables';
+@import '../text';
+.member-info {
+  .container {
+    background: $background;
+    color: $white;
+    .row {
+      @include media-breakpoint-down(md) {
+        display: block;
+        & > div {
+          width: 100%;
+          &:first-of-type {
+            margin-bottom: 24px;
+          }
+        }
+      }
+    }
+    .basic-info {
+      flex: 5;
+    }
+    .advanced-infp {
+      flex: 7;
+    }
+    .card {
+      border-radius: 20px;
+      background: $white;
+      padding: 24px;
+      @include media-breakpoint-up(md) {
+        padding: 40px;
+      }
+      &-title {
+        @include tw-text-h5();
+        margin-bottom: 40px;
+      }
+      &-item {
+        margin-bottom: 24px;
+        position: relative;
+        &-label {
+          margin-bottom: 8px;
+          color: $neutral-80;
+          @include tw-text-body();
+        }
+        &-value {
+          @include tw-text-title();
+          &.form-control,
+          &.form-select {
+            border: 1px solid $neutral-40;
+          }
+          .password-node-wrapper {
+            display: flex;
+            padding: 8px 0;
+            .password-node {
+              display: block;
+              width: 8px;
+              height: 8px;
+              border-radius: 4px;
+              background: $neutral-100;
+              margin-right: 8px;
+            }
+          }
+        }
+        &-input_wrapper {
+          display: flex;
+          margin: 0 -10px;
+          margin-bottom: 24px;
+          &:last-child {
+            margin-bottom: 0;
+          }
+          .card-item-value {
+            flex: 1;
+            margin: 0 8px;
+          }
+        }
+        .prefix-item {
+          position: absolute;
+          top: 50%;
+          right: 0;
+          transform: translateY(-50%);
+          color: $primary-100;
+          text-decoration: underline;
+          cursor: pointer;
+        }
+        .btn {
+          width: auto;
+        }
+      }
+    }
+  }
+}

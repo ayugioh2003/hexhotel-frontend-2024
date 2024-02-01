@@ -1,5 +1,7 @@
 import Layout from "@/components/Layout"
 import SvgIcon from '@/components/SvgIcon'
+import InfoList from '@/components/InfoList'
+// import DialogMsg from '@/components/DialogMsg'
 
 const BookRoom = () => {
   const roomInfo: { icon:string, text:string }[] = [
@@ -32,6 +34,7 @@ const BookRoom = () => {
 
   return ( 
     <Layout>
+      {/* <DialogMsg /> */}
       <div className="container-fluid book-room">
         <div className="container">
           <div className="row">
@@ -184,51 +187,21 @@ const BookRoom = () => {
                     <div className="room-info__title">
                         <h5>房間格局</h5>
                       </div>
-                      <div className="room-info__content">
-                        {
-                          roomLayout.map((item) => {
-                            return (
-                            <li key={item}>
-                              <SvgIcon className="mr-2" name="svg/ic_check" width={18} height={14} color={'#BF9D7D'}/>
-                              <span className="fw-bold">{item}</span>
-                            </li>)
-                          })
-                        }
-                      </div>
+                      <InfoList data={roomLayout} />
                   </li>
 
                   <li className="room-info__box">
                     <div className="room-info__title">
                         <h5>房內設備</h5>
                       </div>
-                      <div className="room-info__content">
-                        {
-                          roomEquipment.map((item) => {
-                            return (
-                            <li key={item}>
-                              <SvgIcon className="mr-2" name="svg/ic_check" width={18} height={14} color={'#BF9D7D'}/>
-                              <span className="fw-bold">{item}</span>
-                            </li>)
-                          })
-                        }
-                      </div>
+                      <InfoList data={roomEquipment} />
                   </li>
                   
                   <li className="room-info__box">
                     <div className="room-info__title">
                         <h5>備品提供</h5>
                       </div>
-                      <div className="room-info__content">
-                        {
-                          supplies.map((item) => {
-                            return (
-                            <li key={item}>
-                              <SvgIcon className="mr-2" name="svg/ic_check" width={18} height={14} color={'#BF9D7D'}/>
-                              <span className="fw-bold">{item}</span>
-                            </li>)
-                          })
-                        }
-                      </div>
+                      <InfoList data={supplies} />
                   </li>
                 </div>
             </div>

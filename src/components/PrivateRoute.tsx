@@ -43,4 +43,4 @@ const NonAuthRoute = () => {
     )
 }
 
-export { AuthRoute, NonAuthRoute }
+export { AuthRoute, NonAuthRoute };
