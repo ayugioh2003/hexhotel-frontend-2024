@@ -24,3 +24,8 @@ type Room = {
   createdAt: string;
   updatedAt: string;
 };
+
+type RoomsResponse = {
+  status: boolean 
+  result: Room[]
+}
