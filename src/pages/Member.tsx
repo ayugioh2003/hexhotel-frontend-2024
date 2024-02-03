@@ -9,8 +9,10 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import SvgIcon from '@/components/SvgIcon';
 import SectionTab from '@/components/SectionTab';
 import bottomLineSource from '@/assets/svg/bi_bottom_line.svg';
+import useUserStore from '@/store/useUserStore';
 
 const Member = () => {
+  const name = useUserStore(s => s.name);
   const navigate = useNavigate();
   const location = useLocation();
   const [activeItem, setActiveItem] = useState('0');
@@ -46,7 +48,7 @@ const Member = () => {
           <div className="hero-area-wrapper container">
             <SvgIcon name="svg/ic_user" className="hero-area-icon"></SvgIcon>
             <p className="hero-area-text tw-text-white tw-font-[700] tw-text-[32px] md:tw-text-[48px] tw-tracking-[1.6px] md:tw-tracking-[2.4px]">
-              Hello，Jessica
+              Hello，{name}
             </p>
           </div>
         </div>
