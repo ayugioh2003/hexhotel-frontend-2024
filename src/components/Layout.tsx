@@ -1,13 +1,21 @@
 import Header from "./Header"
 import Footer from "./Footer"
 
-const Layout = ({ children } : { children: JSX.Element | JSX.Element[] }) => {
+type LayoutProps = {
+    children: JSX.Element | JSX.Element[];
+    showFooter?: boolean,
+}
+
+const Layout = ({ children, showFooter = true } : LayoutProps) => {
 
     return (
         <>
             <Header />
             {children}
-            <Footer />
+            {
+                showFooter &&
+                <Footer />
+            }
         </>
     )
 }
