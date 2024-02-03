@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import dayjs from 'dayjs';
@@ -9,13 +9,22 @@ import Layout from '../components/Layout';
 import Carousel from '@/components/Carousel.tsx';
 import RoomInfo from '@/components/RoomInfo';
 
-import { roomsRes } from '@/assets/mockdata/rooms.ts';
+import { queryRoom } from '@/services/RoomService';
+
+// import { roomsRes } from '@/assets/mockdata/rooms.ts';
 import { roomInfo, roomEquipment, roomLayout, supplies } from '@/assets/mockdata/room-info';
 
 import minusImg from '@/assets/svg/ic_minus.svg';
 import plusImg from '@/assets/svg/ic_plus.svg';
 
-const Header = () => {
+type HeaderProps = {
+  roomResponse: RoomResponse;
+};
+const Header = ({ roomResponse }: HeaderProps) => {
+  if (!roomResponse.status) {
+    return <div>loading...</div>;
+  }
+
   return (
     <div className="room-header">
       <div className="readmore">看更多</div>
@@ -23,26 +32,26 @@ const Header = () => {
         <div style={{ height: '124px' }}></div>
         <div className="room-header__gallery">
           <div className="gallery-item">
-            <img src={roomsRes.result[0].imageUrlList[0]} alt="" />
+            <img src={roomResponse.result.imageUrlList[0]} alt="" />
           </div>
           <div className="gallery-item">
-            <img src={roomsRes.result[0].imageUrlList[1]} alt="" />
+            <img src={roomResponse.result.imageUrlList[1]} alt="" />
           </div>
           <div className="gallery-item">
-            <img src={roomsRes.result[0].imageUrlList[2]} alt="" />
+            <img src={roomResponse.result.imageUrlList[2]} alt="" />
           </div>
           <div className="gallery-item">
-            <img src={roomsRes.result[0].imageUrlList[3]} alt="" />
+            <img src={roomResponse.result.imageUrlList[3]} alt="" />
           </div>
           <div className="gallery-item">
-            <img src={roomsRes.result[0].imageUrlList[4]} alt="" />
+            <img src={roomResponse.result.imageUrlList[4]} alt="" />
           </div>
         </div>
       </div>
       <div className="d-block d-md-none">
         <div style={{ height: '72px' }}></div>
         <Carousel
-          imageUrlList={roomsRes.result[0].imageUrlList}
+          imageUrlList={roomResponse.result.imageUrlList}
           imageStyle={{
             width: '100%',
             aspectRatio: '16 / 9',
@@ -55,7 +64,11 @@ const Header = () => {
   );
 };
 
-const Room = () => {
+type RoomProps = {
+  roomId?: string;
+  roomResponse: RoomResponse;
+};
+const Room = ({ roomId, roomResponse }: RoomProps) => {
   const navigate = useNavigate();
 
   const [peopleNum, setPeopleNum] = useState(1);
@@ -140,8 +153,8 @@ const Room = () => {
         <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
           <div className="d-flex gap-3 gap-md-5 pb-4 justify-content-between flex-column flex-md-row">
             <div style={{ width: '450px' }}>
-              <div className='fw-bold'>
-                { dayjs(checkOutDateTemp).diff(dayjs(checkInDateTemp), 'day') }
+              <div className="fw-bold">
+                {dayjs(checkOutDateTemp).diff(dayjs(checkInDateTemp), 'day')}
                 <span>晚</span>
               </div>
               <div className="d-flex">
@@ -180,6 +193,10 @@ const Room = () => {
     );
   }
 
+  if (!roomResponse.status) {
+    return <div>loading...</div>;
+  }
+
   return (
     <div className="container room-detail">
       <div className="row justify-content-between">
@@ -190,6 +207,7 @@ const Room = () => {
             roomEquipment={roomEquipment}
             roomLayout={roomLayout}
             supplies={supplies}
+            roomDetail={roomResponse.result}
           />
         </div>
 
@@ -198,16 +216,16 @@ const Room = () => {
             <div className="card-body">
               <div className="room-card__hint">預約房型</div>
               <hr />
-              <h4 className="card-title">尊爵雙人房</h4>
+              <h4 className="card-title">{roomResponse.result.name}</h4>
               <div className="card-content">
                 <div className="room-card__description">
-                  享受高級的住宿體驗，尊爵雙人房提供給您舒適寬敞的空間和精緻的裝潢。
+                  {roomResponse.result.description}
                 </div>
                 <div className="room-card__range">
                   <RoomModal></RoomModal>
                 </div>
                 <div className="room-card__people">
-                  <div className='fw-bold'>人數</div>
+                  <div className="fw-bold">人數</div>
                   <div className="d-flex gap-3 align-items-center">
                     <button
                       className="p-3 bg-transparent border border-light rounded-circle"
@@ -224,7 +242,7 @@ const Room = () => {
                     <button
                       className="p-3 bg-transparent border border-light rounded-circle"
                       onClick={() => {
-                        if (peopleNum >= 4) {
+                        if (peopleNum >= roomResponse.result.maxPeople) {
                           return;
                         }
                         setPeopleNum(peopleNum + 1);
@@ -234,7 +252,10 @@ const Room = () => {
                     </button>
                   </div>
                 </div>
-                <div className="room-card__price">NT& 10,000</div>
+                <div className="room-card__price">
+                  NT&nbsp;
+                  {roomResponse.result.price * (dayjs(checkOutDate).diff(dayjs(checkInDate), 'day'))}
+                </div>
               </div>
 
               <button
@@ -243,10 +264,11 @@ const Room = () => {
                 onClick={() => {
                   navigate('/bookRoom', {
                     state: {
-                      roomId: '65a53b55abddf349a961859d',
+                      roomId: roomId,
                       checkInDate: dayjs(checkInDate).format('YYYY/MM/DD'),
                       checkOutDate: dayjs(checkOutDate).format('YYYY/MM/DD'),
-                      peopleNum: peopleNum
+                      peopleNum: peopleNum,
+                      roomDetail: roomResponse.result
                     }
                   });
                 }}
@@ -262,11 +284,41 @@ const Room = () => {
 };
 
 const RoomPage = () => {
+  const { id } = useParams();
+
+  const [roomResponse, setRoomResponse] = useState<RoomResponse>({
+    status: false,
+    result: {
+      _id: '',
+      name: '',
+      description: '',
+      imageUrl: '',
+      imageUrlList: [],
+      areaInfo: '',
+      bedInfo: '',
+      maxPeople: 0,
+      price: 0,
+      status: 0,
+      facilityInfo: [],
+      amenityInfo: [],
+      createdAt: '',
+      updatedAt: ''
+    }
+  });
+
+  useEffect(() => {
+    async function fetchRooms() {
+      const roomRes = await queryRoom(id || '');
+      setRoomResponse(roomRes);
+    }
+    fetchRooms();
+  }, []);
+
   return (
     <Layout>
       <div className="room">
-        <Header></Header>
-        <Room />
+        <Header roomResponse={roomResponse}></Header>
+        <Room roomId={id} roomResponse={roomResponse} />
       </div>
     </Layout>
   );

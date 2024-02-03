@@ -29,3 +29,8 @@ type RoomsResponse = {
   status: boolean 
   result: Room[]
 }
+
+type RoomResponse = {
+  status: boolean 
+  result: Room
+}

@@ -14,6 +14,7 @@ const BookRoom = () => {
   // peopleNum: 人數
   // checkInDate: 起住日期
   // checkOutDate: 退房日期
+  // roomDetail: 房型詳細資料
   const location = useLocation();
   console.log('location', location)
 
