@@ -5,10 +5,10 @@ import { roomInfo, roomLayout } from '@/assets/mockdata/room-info';
 
 type RoomInfoType = {
   showToKnow?: boolean;
-  roomInfo: Array<Record<string, string>>;
-  roomLayout: string[];
-  roomEquipment: string[];
-  supplies: string[];
+  // roomInfo: Array<Record<string, string>>;
+  // roomLayout: string[];
+  // roomEquipment: string[];
+  // supplies: string[];
   roomDetail: Room;
 };
 const RoomInfo = ({ showToKnow = false,  roomDetail }: RoomInfoType) => {

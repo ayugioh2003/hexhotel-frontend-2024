@@ -12,7 +12,7 @@ import RoomInfo from '@/components/RoomInfo';
 import { queryRoom } from '@/services/RoomService';
 
 // import { roomsRes } from '@/assets/mockdata/rooms.ts';
-import { roomInfo, roomEquipment, roomLayout, supplies } from '@/assets/mockdata/room-info';
+// import { roomInfo, roomEquipment, roomLayout, supplies } from '@/assets/mockdata/room-info';
 
 import minusImg from '@/assets/svg/ic_minus.svg';
 import plusImg from '@/assets/svg/ic_plus.svg';
@@ -203,10 +203,6 @@ const Room = ({ roomId, roomResponse }: RoomProps) => {
         <div className="col-lg-7 col-sm-12">
           <RoomInfo
             showToKnow={true}
-            roomInfo={roomInfo}
-            roomEquipment={roomEquipment}
-            roomLayout={roomLayout}
-            supplies={supplies}
             roomDetail={roomResponse.result}
           />
         </div>
