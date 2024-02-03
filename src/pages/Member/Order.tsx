@@ -1,4 +1,6 @@
 import InfoList from '@/components/InfoList';
+import { useState } from 'react';
+import Modal from 'react-modal';
 import { orderInfo, historyOrder, roomEquipment, supplies } from '@/assets/mockdata/order-info';
 const dateToString = (timestamp: number) => {
   let date = new Date(timestamp);
@@ -81,7 +83,43 @@ const OrderHistoryList: React.FC = () => {
     </ul>
   );
 };
+
 const Order = () => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  function closeModal() {
+    setModalIsOpen(false);
+  }
+  function openModal() {
+    setModalIsOpen(true);
+  }
+  const OrderModal = () => {
+    const customStyles = {
+      content: {
+        top: '50%',
+        left: '50%',
+        bottom: 'auto',
+        maxWidth: '650px',
+        marginRight: '-50%',
+        padding: '12px',
+        transform: 'translate(-50%, -50%)'
+      }
+    };
+    return (
+      <>
+        <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles} contentLabel="Example Modal">
+          <div className="order-modal">
+            <div className="order-modal-text">確定要取消此房型的預定嗎</div>
+            <div className="order-modal-group">
+              <button className="btn btn-secondary" onClick={closeModal}>
+                關閉視窗
+              </button>
+              <button className="btn btn-primary">確認取消</button>
+            </div>
+          </div>
+        </Modal>
+      </>
+    );
+  };
   return (
     <div className="member-order">
       <div className="container">
@@ -137,7 +175,7 @@ const Order = () => {
                   </li>
                 </ul>
                 <div className="order-detail-control">
-                  <button type="button" className="btn btn-secondary">
+                  <button type="button" className="btn btn-secondary" onClick={() => openModal()}>
                     取消預定
                   </button>
                   <button type="button" className="btn btn-primary">
@@ -157,6 +195,7 @@ const Order = () => {
           </div>
         </div>
       </div>
+      <OrderModal />
     </div>
   );
 };

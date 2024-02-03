@@ -226,3 +226,19 @@
     }
   }
 }
+.order-modal {
+  &-text {
+    text-align: center;
+    padding: 100px 80px;
+    border-bottom: 1px solid $neutral-40;
+  }
+  &-group {
+    margin: 0 -8px;
+    display: flex;
+    padding: 12px 0 0 0;
+    .btn {
+      flex: 1;
+      margin: 0 8px;
+    }
+  }
+}
