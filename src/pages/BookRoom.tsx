@@ -4,7 +4,7 @@ import Layout from '@/components/Layout';
 import SvgIcon from '@/components/SvgIcon';
 import RoomInfo from '@/components/RoomInfo'
 
-import { roomInfo, roomLayout, roomEquipment, supplies} from '@/assets/mockdata/room-info';
+// import { roomInfo, roomLayout, roomEquipment, supplies} from '@/assets/mockdata/room-info';
 
 // import DialogMsg from '@/components/DialogMsg'
 
@@ -14,8 +14,10 @@ const BookRoom = () => {
   // peopleNum: 人數
   // checkInDate: 起住日期
   // checkOutDate: 退房日期
+  // roomDetail: 房型詳細資料
   const location = useLocation();
   console.log('location', location)
+  const { roomDetail } = location.state
 
   const editBooking = () => {
     console.log('editBooking');
@@ -173,7 +175,7 @@ const BookRoom = () => {
 
               <hr />
 
-              <RoomInfo  roomInfo={roomInfo} roomLayout={roomLayout} roomEquipment={roomEquipment} supplies={supplies} />
+              <RoomInfo roomDetail={roomDetail} />
 
             </div>
 
