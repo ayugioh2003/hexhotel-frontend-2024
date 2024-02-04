@@ -5,7 +5,7 @@ import routers from '@/routers'
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
 import '@/styles/index.scss'
-import "virtual:svg-icons-register";
+//import "virtual:svg-icons-register";
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
