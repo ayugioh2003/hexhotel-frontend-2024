@@ -63,7 +63,7 @@ const CardContent = ({orderUserId, roomName, peopleNum, price, pic, days, checkI
 
             <div className="booking-info">
               <div className="booking-info__title">
-                <h6>{roomName}，1 晚 <span>|</span> 住宿人數：{peopleNum} 位</h6>
+                <h6>{roomName}，{days} 晚 <span>|</span> 住宿人數：{peopleNum} 位</h6>
               </div>
               <div className="booking-info__content">
                 <p>入住：{checkInDate}，15:00 可入住</p>
