@@ -35,7 +35,7 @@ const Index = () => {
 
     return (
         <Layout>
-            <div style={{paddingTop:'120px'}}>
+            <div>
                 <div className="vh-100 position-relative">
                     <img 
                         className="object-fit-cover w-100 min-vh-100 position-absolute object-position-center-center" 
