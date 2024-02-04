@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import cityDistrictData from  '@/assets/data/cityDistrict.json'
 
 type CitySelectorType = {
@@ -16,6 +16,14 @@ const CitySelector = ({ onChange }: CitySelectorType) => {
     const [districts, setDistricts] = useState<Array<District>>(cityDistrictData[0].districts)
     const citys = cityDistrictData.map(m => m.city)
 
+    useEffect(() => {
+        let value = Number(cityDistrictData[0]?.districts[0]?.zip)
+        if(Number.isNaN(value)) {
+            value = 0
+        }
+
+        onChange(value)
+    }, [])
 
     const handleChangeCity = (newCity: string) => {
         const newDistricts = cityDistrictData.filter(m => m.city === newCity)[0]?.districts ?? []
