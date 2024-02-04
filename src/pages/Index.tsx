@@ -39,7 +39,7 @@ const Index = () => {
                 <div className="vh-100 position-relative">
                     <img 
                         className="object-fit-cover w-100 min-vh-100 position-absolute object-position-center-center" 
-                        src={"https://github.com/hexschool/2022-web-layout-training/blob/main/typescript-hotel/%E6%A1%8C%E6%A9%9F%E7%89%88/banner.png?raw=true"} 
+                        src={"./src/assets/png/banner.png"} 
                         style={brightness40}
                         alt="banner" 
                     />
@@ -65,7 +65,7 @@ const Index = () => {
                     <img 
                         className="object-fit-cover w-100 position-absolute object-position-center-center" 
                         style={aboutBackgroundStyle}
-                        src={"https://github.com/hexschool/2022-web-layout-training/blob/main/typescript-hotel/%E6%A1%8C%E6%A9%9F%E7%89%88/about.png?raw=true"} 
+                        src={"./src/assets/png/about.png"} 
                         alt="about" 
                     />                    
                     <div 
