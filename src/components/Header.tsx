@@ -1,14 +1,21 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import useUserStore from "@/store/useUserStore"
+import { useState, CSSProperties } from 'react'
 import SvgIcon from './SvgIcon'
-
-const loginStatus = true
 
 const Header = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const userName = useUserStore((state: { name: string }) => state.name);
+    const token = useUserStore((state: { token: string }) => state.token);
+    const loginStatus = token !== '' ? true : false
     const [isLogin] = useState<boolean>(loginStatus)
     const [ mobileAction, setMobileAction ] = useState('')
+    const containerStyle: CSSProperties = {
+        height: mobileAction === 'mobile-list--action' ? '100%' : undefined,
+    };
+
+    
     const handlerOpen = () => {
         mobileAction ==='' ? setMobileAction('mobile-list--action') : setMobileAction('')
     }
@@ -28,10 +35,10 @@ const Header = () => {
                 </div>
                 <div className="col-7">
                     <ul className="nav">
-                        <li><Link to="/BookRoom">客房旅宿</Link></li>
+                        <li><Link to="/Rooms">客房旅宿</Link></li>
                         {
                             isLogin ? 
-                                <li><SvgIcon className="mr-2" name="svg/ic_Profile" width={24} height={24} color={'white'}/><Link to="/member">Jessica</Link></li> : 
+                                <li><SvgIcon className="mr-2" name="svg/ic_Profile" width={24} height={24} color={'white'}/><Link to="/member">{userName}</Link></li> : 
                                 <li><Link to="/login">會員登入</Link></li> 
                                 
                         }
@@ -53,10 +60,10 @@ const Header = () => {
                             </button>
                         </div>
 
-                        <div className="col-12 mobile-list">
+                        <div className="col-12 mobile-list" style={containerStyle}>
                             <ul className={mobileAction}>
                                 <li>
-                                    <button className="btn w-100" onClick={() => navigate('/BookRoom') }>客房旅宿</button>
+                                    <button className="btn w-100" onClick={() => navigate('/Rooms') }>客房旅宿</button>
                                 </li>
                                 <li>
                                     {

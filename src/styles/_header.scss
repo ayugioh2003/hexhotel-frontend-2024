@@ -63,7 +63,7 @@
       align-items: center;
       height: 120px;
       margin: 0 16px 0 0;
-      width: 97px;
+      min-width: 97px;
 
       a {
         color: $white;
@@ -101,12 +101,15 @@
       width: 48px;
       height: 48px;
     }
+
+    & button {
+      background: none;
+      border: none;
+    }
   }
 
   .mobile-list {
-    // FIXME: 在手機版時，這邊的設定會讓很多頁面無法點擊按鈕
     width: 100%;
-    height: 100%;
     padding: 0;
     position: fixed;
     z-index: -1;
