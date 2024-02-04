@@ -102,38 +102,29 @@ const CardContent = ({orderUserId, roomName, peopleNum, price, pic, days, checkI
 
 const BookingSuccess = () => {
   const location = useLocation();
-  const [orderId, setOrderId] = useState('')
-  const [ orderList, setOrderList]= useState({})
-  const [ order, setOrder ] = useState({})
-  
   const token = useUserStore((state: { token: string }) => state.token);
+  const [orderList, setOrderList] = useState<OrderList>({} as OrderList);
+
   
-  // const navigate = useNavigate();
   useEffect(() => {
 
     (async() => {
       try {
-        // 取 order 資料
-        setOrder(location.state);
-        
-        // 設置 orderId
-        setOrderId(location.state.orderId);
-      
+
         // 在設置狀態之前檢查組件是否仍然掛載
-        if ( orderId !== '') {
-          const res = await fetch(`https://freyja-iwql.onrender.com/api/v1/orders/${orderId}`, {
+        if ( location.state.orderId !== '') {
+          const res = await fetch(`https://freyja-iwql.onrender.com/api/v1/orders/${location.state.orderId}`, {
             headers: { 'Authorization': `Bearer ${token}` },
             method: 'GET',
           });
           const data = await res.json();
           setOrderList(data.result);
-
         }
       } catch (error) {
         console.log('rooms error =>', error);
       }
     })()
-  }, [location.state, token, orderId]);
+  }, [location.state, token]);
   
   return ( 
     <Layout>
@@ -141,19 +132,26 @@ const BookingSuccess = () => {
         <div className="container">
           <div className="row">
             {/* 訂房人 */}
-            <LeftContent 
-              email={orderList?.userInfo?.email} 
-              name={orderList?.userInfo?.name} 
-              phone={orderList?.userInfo?.phone} 
-            />
+            {/* <LeftContent 
+              email={orderList!.userInfo!.email} 
+              name={orderList!.userInfo!.name} 
+              phone={orderList!.userInfo!.phone} 
+            /> */}
+            {orderList && orderList.userInfo && (
+              <LeftContent 
+                email={orderList.userInfo.email} 
+                name={orderList.userInfo.name} 
+                phone={orderList.userInfo.phone} 
+              />
+            )}
             
             {/* 訂房卡片資訊 */}
             <CardContent
-              orderUserId={orderList?.orderUserId}
-              roomName={orderList?.roomId?.name}
-              peopleNum={orderList?.peopleNum}
-              price={orderList?.roomId?.price}
-              pic={orderList?.roomId?.imageUrl}
+              orderUserId={orderList?.orderUserId ?? ''}
+              roomName={orderList?.roomId?.name ?? ''}
+              peopleNum={orderList?.peopleNum ?? 0}
+              price={orderList?.roomId?.price ?? 0}
+              pic={orderList?.roomId?.imageUrl ?? ''}
               days={location.state.stayingDays}
               checkInDate={location.state.checkInDate}
               checkOutDate={location.state.checkOutDate}

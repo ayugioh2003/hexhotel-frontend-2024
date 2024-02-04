@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useForm } from "react-hook-form"
+import { FieldValues, UseFormRegister, UseFormSetValue, useForm } from "react-hook-form"
 import { useState, useEffect, useCallback, ChangeEvent } from 'react'
 import useUserStore from "@/store/useUserStore"
 
@@ -74,8 +74,15 @@ const BookingInfo = ({ checkIn, checkOut, peopleNum, roomName}:{ checkIn:string,
   )
 }
 // 訂房人資訊
-const Booker = ({token, register, errors, setValue}:{token:string, register:any, errors:any, setValue:unknown}) => {
-
+// const Booker :React.FC<BookerProps> = ({token, register, errors, setValue}) => {
+  const Booker= ({token, register, errors, setValue}:
+    {
+      token: string,
+      register: UseFormRegister<FormDataType>,
+      errors: FieldValues,
+      setValue: UseFormSetValue<FormDataType>
+    }
+  ) => {
   const [country, setCountry] = useState(() => '');
   const addressData: CityData[] = addressList;
   const [townList, setTownList] = useState<TownData[]>([]);
@@ -98,7 +105,7 @@ const Booker = ({token, register, errors, setValue}:{token:string, register:any,
     address: '',
   });
 
-  const getTownList = (countryName:string) => {
+  const getTownList = useCallback((countryName:string) => {
     let matchTown:TownData[] =[]
     const nowTowns = addressData.find((item: CityData) => item.name === countryName);
 
@@ -116,12 +123,12 @@ const Booker = ({token, register, errors, setValue}:{token:string, register:any,
       setTown('')
     }
     setTownList(matchTown);
-  }
+  }, [addressData]); 
 
  
   useEffect(() => {
     getTownList(country)
-  }, [country]);
+  }, [country, getTownList]);
 
   
   useEffect(() => {
@@ -138,7 +145,7 @@ const Booker = ({token, register, errors, setValue}:{token:string, register:any,
       setValue('area', formData.area);
     })()
    
-}, [formData, setValue]);
+  }, [formData, setValue, getTownList]);
 
    // 取得會員資料並存起來
   const handlerSetValue = async () => {
@@ -411,9 +418,12 @@ const BookRoom = () => {
   
   const [isDialogMsg, setIsDialogMsg] = useState(false);
   const [ dialogText, setDialogText] = useState<string>('')
-  const [ rooms, setRooms ]= useState({})
+  const [rooms, setRooms] = useState<Room | null>(null);
   const [ stayingDays, setStayingDays] = useState(0)
-  const [ weekDays, setWeekDays] = useState({})
+  const [weekDays, setWeekDays] = useState<{ checkIn: string; checkOut: string }>({
+    checkIn: '',
+    checkOut: '',
+  });
   
 
   // 取得月日星期幾
@@ -468,20 +478,20 @@ const BookRoom = () => {
     handleSubmit,
     setValue,
     formState: { errors }
-  } = useForm({
+  } = useForm<FormDataType>({
     defaultValues:{}
   })
 
   
-  const submit = async (data) => {
+  const submit = async (data: FormDataType) => {
 
     setDialogText('正在處理你的預訂')
     setIsDialogMsg(true)
 
     // 換算成郵遞區號
     const cityData = addressList.find((item: CityData) => item.name === data.city)
-    const areaData = cityData ? cityData.children.find(item => item.name === data.area) : {}
-
+    const areaData = cityData ? cityData.children.find(item => item.name === data.area) : {} as { name: string, code: string };
+  
     try {
       // 新增訂單
       const response = await fetch('https://freyja-iwql.onrender.com/api/v1/orders/', {
@@ -497,7 +507,7 @@ const BookRoom = () => {
           peopleNum: location.state.peopleNum,
           userInfo: {
             address: {
-              zipcode: areaData?.code,
+              zipcode: Number(areaData!.code),
               detail: data.address,
             },
             name: data.name,
@@ -559,7 +569,7 @@ const BookRoom = () => {
                 checkIn={ weekDays?.checkIn }
                 checkOut={ weekDays?.checkOut }
                 peopleNum={ location.state?.peopleNum }
-                roomName={ rooms?.name }
+                roomName={rooms ? rooms.name : ''}
               />
               <hr />
 
@@ -580,8 +590,8 @@ const BookRoom = () => {
             <div className="col-lg-5 col-md-6 col-sm-12">
                {/* 卡片資訊 */}
               <CardInfo 
-                price={ rooms.price }
-                pic={ rooms.imageUrl }
+                price={ rooms ? rooms.price: 0 }
+                pic={rooms ? rooms.imageUrl : ''}
                 days={ stayingDays }
               />
             </div>
