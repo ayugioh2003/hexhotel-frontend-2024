@@ -1,4 +1,5 @@
 import InfoList from '@/components/InfoList';
+
 import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import { getUserOrders } from '@/services/OrderService';
@@ -14,6 +15,7 @@ type order = {
   equipment: string[];
   supplies: string[];
 };
+
 const dateToString = (timestamp: number) => {
   let date = new Date(timestamp);
   switch (date.getDay()) {
