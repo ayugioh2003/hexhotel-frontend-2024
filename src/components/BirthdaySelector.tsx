@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type BirthdaySelectorType = {
     onChange: (birthday: string) => void
@@ -30,6 +30,10 @@ const BirthdaySelector = ({ onChange }: BirthdaySelectorType) => {
 
     const years = [...numberGenerator(1900, (new Date).getFullYear())]
     const months = [...numberGenerator(1, 12)]
+
+    useEffect(() => {
+        onChange(`${defaultYear}/${defaultMonth.toString().padStart(2, '0')}/${defaultDay.toString().padStart(2, '0')}`)
+    }, [])
 
     const handleChangeYear = (year: string) => {
         let newYear = Number(year)
