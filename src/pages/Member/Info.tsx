@@ -1,8 +1,18 @@
 import { useState, useEffect, useCallback, ChangeEvent } from 'react';
-import countriesData from '@/assets/data/countries.json';
-import townsData from '@/assets/data/towns.json';
+import cityData from '@/assets/data/cityDistrict.json';
+import { queryUser, updateUser } from '@/services/UserService';
+import useUserStore from '@/store/useUserStore';
 const MemberInfo = () => {
-  let [mode, setMode] = useState(() => 'show');
+  const token = useUserStore(s => s.token);
+  const [mode, setMode] = useState(() => 'show');
+  const [userData, setUserData] = useState<userResult | null>(() => null);
+  const getUserInfo = async () => {
+    let res = (await queryUser(token)).result;
+    setUserData(res);
+  };
+  useEffect(() => {
+    getUserInfo();
+  }, []);
   let handleInput = useCallback(
     (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, setFunc: React.Dispatch<React.SetStateAction<string>>) => {
       setFunc(e.target.value);
@@ -17,6 +27,41 @@ const MemberInfo = () => {
     return <div className="password-node-wrapper">{template}</div>;
   };
   let ShowInfo: React.FC = () => {
+    const [email, setEmail] = useState('Jessica@exsample.com');
+    const [name, setName] = useState(() => 'Jessica Ｗang');
+    const [phone, setPhone] = useState(() => '+886912345678');
+    const [birthday, setBirthday] = useState(() => '1990 年 8 月 15 日');
+    const [address, setAddress] = useState(() => '高雄市新興區六角路 123 號');
+    useEffect(() => {
+      if (userData != null) {
+        setName(userData.name);
+        setPhone(userData.phone);
+        setEmail(userData.email);
+        let birthdaySource = userData.birthday.split('T')[0].split('-');
+        setBirthday(`${birthdaySource[0]} 年 ${birthdaySource[1]} 月 ${birthdaySource[2]} 日`);
+        let tempCity: string = '';
+        let tempTown: {
+          zip: string;
+          name: string;
+        } = {
+          zip: '',
+          name: ''
+        };
+        cityData.some(city => {
+          let ownerCity = city.districts.some(town => {
+            if (town.zip == String(userData.address.zipcode)) {
+              tempTown = town;
+              tempCity = city.city;
+              return true;
+            }
+          });
+          if (ownerCity) {
+            return true;
+          }
+        });
+        setAddress(`${tempCity}${tempTown.name}${userData.address.detail}`);
+      }
+    }, [userData]);
     return (
       <div className="row">
         <div className="col-5">
@@ -24,7 +69,7 @@ const MemberInfo = () => {
             <div className="card-title">修改密碼</div>
             <div className="card-item">
               <div className="card-item-label">電子信箱</div>
-              <div className="card-item-value">Jessica@exsample.com</div>
+              <div className="card-item-value">{email}</div>
             </div>
             <div className="card-item has-prefix">
               <div className="card-item-label">密碼</div>
@@ -42,19 +87,19 @@ const MemberInfo = () => {
             <div className="card-title">基本資料</div>
             <div className="card-item">
               <div className="card-item-label">姓名</div>
-              <div className="card-item-value">Jessica Ｗang</div>
+              <div className="card-item-value">{name}</div>
             </div>
             <div className="card-item">
               <div className="card-item-label">手機號碼</div>
-              <div className="card-item-value">+886912345678</div>
+              <div className="card-item-value">{phone}</div>
             </div>
             <div className="card-item">
               <div className="card-item-label">生日</div>
-              <div className="card-item-value">1990 年 8 月 15 日</div>
+              <div className="card-item-value">{birthday}</div>
             </div>
             <div className="card-item">
               <div className="card-item-label">地址</div>
-              <div className="card-item-value">高雄市新興區六角路 123 號</div>
+              <div className="card-item-value">{address}</div>
             </div>
             <div>
               <button type="button" className="btn btn-secondary" onClick={() => setMode('edit')}>
@@ -68,17 +113,69 @@ const MemberInfo = () => {
   };
   let EditInfo: React.FC = () => {
     let now = new Date();
-    let [email, setEmail] = useState(() => '');
-    let [oldPassword, setOldPassword] = useState(() => '');
-    let [newPassword, setNewPassword] = useState(() => '');
-    let [reNewPassword, setReNewPassword] = useState(() => '');
-    let [country, setCountry] = useState(() => '基隆市');
-    let [townList, setTownList] = useState<{ city: string; dist: string }[]>(() => townsData);
-    let [town, setTown] = useState(() => '中正區');
-    let [year, setYear] = useState(() => String(now.getFullYear() - 40));
-    let [month, setMonth] = useState(() => '1');
-    let [date, setDate] = useState(() => '1');
-    let [dates, setDates] = useState<string[]>(() => ['1']);
+    const [id, setId] = useState(() => '');
+    const [name, setName] = useState(() => '');
+    const [phone, setPhone] = useState(() => '');
+    const [email, setEmail] = useState(() => '');
+    const [oldPassword, setOldPassword] = useState(() => '');
+    const [newPassword, setNewPassword] = useState(() => '');
+    const [reNewPassword, setReNewPassword] = useState(() => '');
+    const [country, setCountry] = useState(() => '基隆市');
+    const [townList, setTownList] = useState<{ zip: string; name: string }[]>(() => []);
+    const [town, setTown] = useState(() => '200');
+    const [addressDetail, setAddressDetail] = useState(() => '');
+    const [year, setYear] = useState(() => String(now.getFullYear() - 40));
+    const [month, setMonth] = useState(() => '1');
+    const [date, setDate] = useState(() => '1');
+    const [dates, setDates] = useState<string[]>(() => ['1']);
+    useEffect(() => {
+      if (userData != null) {
+        setId(userData._id);
+        setName(userData.name);
+        setPhone(userData.phone);
+        setEmail(userData.email);
+        let birthdaySource = userData.birthday.split('T')[0].split('-');
+        setYear(birthdaySource[0]);
+        let monthString = birthdaySource[1];
+        if (Number(monthString) < 10) {
+          monthString = monthString.replace('0', '');
+        }
+        setMonth(monthString);
+        let dateString = birthdaySource[2];
+        if (Number(dateString) < 10) {
+          dateString = dateString.replace('0', '');
+        }
+        setDate(dateString);
+        let lastDate = new Date(Number(year), Number(month), 0).getDate();
+        getDateListByLastDate(lastDate);
+        let tempCity: string = '';
+        let tempTown: {
+          zip: string;
+          name: string;
+        } = {
+          zip: '',
+          name: ''
+        };
+        cityData.some(city => {
+          let ownerCity = city.districts.some(town => {
+            if (town.zip == String(userData.address.zipcode)) {
+              tempTown = town;
+              tempCity = city.city;
+              return true;
+            }
+          });
+          if (ownerCity) {
+            return true;
+          }
+        });
+        setCountry(tempCity);
+        setTown(tempTown.zip);
+        setAddressDetail(userData.address.detail);
+      }
+    }, [userData]);
+    useEffect(() => {
+      console.log(date);
+    }, [date]);
     let YearSelector: React.FC = () => {
       let yearList = Array.from(
         {
@@ -87,7 +184,7 @@ const MemberInfo = () => {
         (_, index) => String(new Date().getFullYear() - 100 + index + 1)
       );
       return (
-        <select className="card-item-value form-select" value={year} onChange={e => handleInput(e, setYear)}>
+        <select className="card-item-value form-select" value={year} onChange={e => updateDates(e, setYear)}>
           {yearList.map(item => (
             <option key={`year_${item}`} value={item}>
               {item} 年
@@ -104,7 +201,7 @@ const MemberInfo = () => {
         (_, index) => String(index + 1)
       );
       return (
-        <select className="card-item-value form-select" value={month} onChange={e => handleInput(e, setMonth)}>
+        <select className="card-item-value form-select" value={month} onChange={e => updateDates(e, setMonth)}>
           {monthList.map(item => (
             <option key={`month_${item}`} value={item}>
               {item} 月
@@ -122,11 +219,15 @@ const MemberInfo = () => {
       );
       setDates(datesList);
     };
-    useEffect(() => {
+    const updateDates = (
+      e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+      setFunc: React.Dispatch<React.SetStateAction<string>>
+    ) => {
+      handleInput(e, setFunc);
       let lastDate = new Date(Number(year), Number(month), 0).getDate();
       getDateListByLastDate(lastDate);
       setDate('1');
-    }, [year, month]);
+    };
     let DateSelector: React.FC = () => {
       let dateList = Array.from(
         {
@@ -145,19 +246,24 @@ const MemberInfo = () => {
       );
     };
     let CountrySelector: React.FC = () => {
-      let countryList = countriesData.map(item => <option key={item.city}>{item.city}</option>);
+      let countryList = cityData.map(item => <option value={item.city}>{item.city}</option>);
       return (
-        <select className="card-item-value form-select" value={country} onChange={e => handleInput(e, setCountry)}>
+        <select
+          className="card-item-value form-select"
+          key={`${country}`}
+          value={country}
+          onChange={e => handleInput(e, setCountry)}
+        >
           {countryList}
         </select>
       );
     };
     let getTownListByCountry = (country: string) => {
-      let matchTown = townsData.filter(item => item.city == country);
-      if (matchTown.length > 0) {
-        setTown(matchTown[0].dist);
+      let matchTown = cityData.filter(item => item.city == country);
+      if (matchTown) {
+        setTown(matchTown[0].districts[0].zip);
+        setTownList(matchTown[0].districts);
       }
-      setTownList(matchTown);
     };
     useEffect(() => {
       getTownListByCountry(country);
@@ -167,10 +273,29 @@ const MemberInfo = () => {
       return (
         <select className="card-item-value form-select" value={town} onChange={e => handleInput(e, setTown)}>
           {townList?.map(item => (
-            <option key={`${item.city}_${item.dist}`}>{item.dist}</option>
+            <option key={`${country}_${item.name}`} value={item.zip}>
+              {item.name}
+            </option>
           ))}
         </select>
       );
+    };
+    const updateUserInfo = async () => {
+      let updateInfo = {
+        userId: id,
+        name: name,
+        phone: phone,
+        birthday: `${year}/${month}/${date}`,
+        address: {
+          zipcode: Number(town),
+          detail: addressDetail
+        },
+        oldPassword: oldPassword,
+        newPassword: newPassword
+      };
+      await updateUser(updateInfo, token);
+      getUserInfo();
+      setMode('show');
     };
     return (
       <div className="row">
@@ -182,6 +307,7 @@ const MemberInfo = () => {
               <input
                 className="card-item-value form-control"
                 type="email"
+                autoComplete="false"
                 placeholder="請輸入電子信箱"
                 value={email}
                 onChange={e => handleInput(e, setEmail)}
@@ -193,6 +319,7 @@ const MemberInfo = () => {
                 className="card-item-value form-control"
                 type="password"
                 placeholder="請輸入舊密碼"
+                autoComplete="false"
                 value={oldPassword}
                 onChange={e => handleInput(e, setOldPassword)}
               ></input>
@@ -202,6 +329,7 @@ const MemberInfo = () => {
               <input
                 className="card-item-value form-control"
                 type="password"
+                autoComplete="false"
                 placeholder="請輸入新密碼"
                 value={newPassword}
                 onChange={e => handleInput(e, setNewPassword)}
@@ -212,13 +340,14 @@ const MemberInfo = () => {
               <input
                 className="card-item-value form-control"
                 type="password"
+                autoComplete="false"
                 placeholder="請再輸入一次新密碼"
                 value={reNewPassword}
                 onChange={e => handleInput(e, setReNewPassword)}
               ></input>
             </div>
             <div>
-              <button type="button" className="btn btn-secondary" onClick={() => setMode('edit')}>
+              <button type="button" className="btn btn-secondary" onClick={() => updateUserInfo()}>
                 儲存設定
               </button>
             </div>
@@ -229,11 +358,23 @@ const MemberInfo = () => {
             <div className="card-title">基本資料</div>
             <div className="card-item">
               <div className="card-item-label">姓名</div>
-              <input className="card-item-value form-control" type="text" placeholder="請輸入姓名"></input>
+              <input
+                className="card-item-value form-control"
+                type="text"
+                placeholder="請輸入姓名"
+                value={name}
+                onChange={e => handleInput(e, setName)}
+              ></input>
             </div>
             <div className="card-item">
               <div className="card-item-label">手機號碼</div>
-              <input className="card-item-value form-control" type="phone" placeholder="請輸入手機號碼"></input>
+              <input
+                className="card-item-value form-control"
+                type="phone"
+                placeholder="請輸入手機號碼"
+                value={phone}
+                onChange={e => handleInput(e, setPhone)}
+              ></input>
             </div>
             <div className="card-item">
               <div className="card-item-label">生日</div>
@@ -249,10 +390,16 @@ const MemberInfo = () => {
                 <CountrySelector />
                 <TownSelector />
               </div>
-              <input className="card-item-value form-control" type="text" placeholder="請輸入詳細地址"></input>
+              <input
+                className="card-item-value form-control"
+                type="text"
+                placeholder="請輸入詳細地址"
+                value={addressDetail}
+                onChange={e => handleInput(e, setAddressDetail)}
+              ></input>
             </div>
             <div>
-              <button type="button" className="btn btn-secondary">
+              <button type="button" className="btn btn-secondary" onClick={() => updateUserInfo()}>
                 儲存設定
               </button>
             </div>
@@ -261,7 +408,6 @@ const MemberInfo = () => {
       </div>
     );
   };
-
   return (
     <div className="member-info">
       <div className="container">{mode == 'show' ? <ShowInfo key="show" /> : <EditInfo key="edit" />}</div>
