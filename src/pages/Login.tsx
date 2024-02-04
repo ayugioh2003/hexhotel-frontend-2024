@@ -1,6 +1,6 @@
 import Layout from "@/components/Layout"
 import { useState, ChangeEvent } from "react"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { login } from '@/services/UserService'
 import useUserStore from "@/store/useUserStore"
 import bgLogin from '@/assets/png/bg_login.png'
@@ -79,7 +79,7 @@ const Login = () => {
                             <a href="#">忘記密碼</a>
                         </div>
                         <button type="button" className="btn btn-primary w-100 mb-3" onClick={handleLogin}>會員登入</button>
-                        <p className="mb-0 text-white">沒有會員嗎？ <a href="/register">前往註冊</a></p>
+                        <p className="mb-0 text-white">沒有會員嗎？ <Link to="/register">前往註冊</Link></p>
                     </div>
                 </div>
             </div>
