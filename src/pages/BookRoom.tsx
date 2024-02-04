@@ -10,7 +10,7 @@ import RoomInfo from '@/components/RoomInfo'
 import DialogMsg from '@/components/DialogMsg'
 
 import addressList from '@/assets/data/address.json'
-import { roomInfo, roomLayout, roomEquipment, supplies} from '@/assets/mockdata/room-info';
+// import { roomInfo, roomLayout, roomEquipment, supplies} from '@/assets/mockdata/room-info';
 
 
 // 訂房資訊
@@ -585,7 +585,7 @@ const BookRoom = () => {
 
               <hr />
 
-              <RoomInfo roomDetail={roomDetail} />
+              <RoomInfo roomDetail={location.state.roomDetail} />
 
             </div>
 

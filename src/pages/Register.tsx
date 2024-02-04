@@ -4,6 +4,11 @@ import { signup } from '@/services/UserService'
 import useUserStore from "@/store/useUserStore"
 import { useNavigate } from 'react-router-dom'
 
+enum RegisterStepEnum {
+  first,
+  second,
+}
+
 const Register = () => {
     const [step, setStep] = useState<RegisterStepEnum>(RegisterStepEnum.first)
     const [data, setData] = useState<RegisterData>({
