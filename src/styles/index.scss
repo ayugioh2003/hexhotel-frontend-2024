@@ -75,6 +75,11 @@ h1,
 body {
   //    background: $background;
 }
+
+.dark-background {
+  background: $background;
+}
+
 // text
 @import './text';
 // pages
