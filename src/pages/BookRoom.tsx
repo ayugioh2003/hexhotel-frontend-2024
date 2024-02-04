@@ -10,8 +10,6 @@ import RoomInfo from '@/components/RoomInfo'
 import DialogMsg from '@/components/DialogMsg'
 
 import addressList from '@/assets/data/address.json'
-import { roomInfo, roomLayout, roomEquipment, supplies} from '@/assets/mockdata/room-info';
-
 
 // 訂房資訊
 const BookingInfo = ({ checkIn, checkOut, peopleNum, roomName}:{ checkIn:string, checkOut:string, peopleNum:number, roomName:string }) =>{
@@ -74,7 +72,6 @@ const BookingInfo = ({ checkIn, checkOut, peopleNum, roomName}:{ checkIn:string,
   )
 }
 // 訂房人資訊
-// const Booker :React.FC<BookerProps> = ({token, register, errors, setValue}) => {
   const Booker= ({token, register, errors, setValue}:
     {
       token: string,
@@ -443,11 +440,9 @@ const BookRoom = () => {
   }
 
 
-
   useEffect(() => {
     (async () => {
       try {
-        
         // 計算 住房的天數
         const checkIn: dayjs.Dayjs = dayjs(location.state.checkInDate);
         const checkOut: dayjs.Dayjs = dayjs(location.state.checkOutDate);
@@ -585,7 +580,7 @@ const BookRoom = () => {
 
               <hr />
 
-              <RoomInfo roomDetail={roomDetail} />
+              <RoomInfo roomDetail={location.state.roomDetail}/>
 
             </div>
 

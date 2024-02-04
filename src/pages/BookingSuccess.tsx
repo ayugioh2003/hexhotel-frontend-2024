@@ -132,11 +132,6 @@ const BookingSuccess = () => {
         <div className="container">
           <div className="row">
             {/* 訂房人 */}
-            {/* <LeftContent 
-              email={orderList!.userInfo!.email} 
-              name={orderList!.userInfo!.name} 
-              phone={orderList!.userInfo!.phone} 
-            /> */}
             {orderList && orderList.userInfo && (
               <LeftContent 
                 email={orderList.userInfo.email} 
