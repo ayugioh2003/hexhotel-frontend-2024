@@ -5,7 +5,8 @@ import { Culinary, getCulinary } from "@/services/CulinaryService"
 import { useEffect, useState } from "react"
 import { queryRooms } from '@/services/RoomService'
 import { NewsComponent, RoomComponent, CulinaryComponent } from '@/components/IndexComponent'
-
+import BannerImageUrl from '@/assets/png/banner.png'
+import AboutImageUrl from '@/assets/png/about.png'
 
 const Index = () => {
     const [news, setNews] = useState<Array<News>>([])
@@ -39,7 +40,7 @@ const Index = () => {
                 <div className="vh-100 position-relative">
                     <img 
                         className="object-fit-cover w-100 min-vh-100 position-absolute object-position-center-center" 
-                        src={"./src/assets/png/banner.png"} 
+                        src={BannerImageUrl} 
                         style={brightness40}
                         alt="banner" 
                     />
@@ -65,7 +66,7 @@ const Index = () => {
                     <img 
                         className="object-fit-cover w-100 position-absolute object-position-center-center" 
                         style={aboutBackgroundStyle}
-                        src={"./src/assets/png/about.png"} 
+                        src={AboutImageUrl} 
                         alt="about" 
                     />                    
                     <div 
