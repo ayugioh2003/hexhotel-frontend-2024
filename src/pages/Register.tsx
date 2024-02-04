@@ -120,8 +120,8 @@ const Register = () => {
                 phone: data.phone,
                 birthday: data.birthday,
                 address: {
-                    zipcode: 802,
-                    detail: ''
+                    zipcode: data.address.zipcode,
+                    detail: data.address.detail
                 }
             })
             setUser(response)
