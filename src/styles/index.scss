@@ -53,9 +53,9 @@
 @import 'node_modules/bootstrap/scss/utilities/api';
 // scss-docs-end import-stack
 
-@import "./footer";
-@import "./header";
-@import "./dialog-msg";
+@import './footer';
+@import './header';
+@import './dialog-msg';
 
 h6,
 .h6,
@@ -80,19 +80,17 @@ body {
 // pages
 @import './pages/rooms';
 @import './pages/member';
-@import './pages/member-info';
+@import './pages/member-item';
 @import './pages/room';
 
 // components
 @import './components/room-info';
 
 /* BookRoom */
-@import "./pages/book-room";
+@import './pages/book-room';
 
 /* BookingSuccess */
-@import "./pages/booking-success";
-
+@import './pages/booking-success';
 
 // bs-custom
 @import './bs-custom/index';
-
