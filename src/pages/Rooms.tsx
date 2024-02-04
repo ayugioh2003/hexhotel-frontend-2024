@@ -1,4 +1,5 @@
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Layout from '../components/Layout';
 import Carousel from '@/components/Carousel.tsx';
 
@@ -7,13 +8,18 @@ import bedImg from '@/assets/svg/ic_Bed.svg';
 import personImg from '@/assets/svg/ic_Person.svg';
 import arrowRightImg from '@/assets/svg/ic_ArrowRight.svg';
 
-import { roomsRes } from '@/assets/mockdata/rooms.ts';
+import { queryRooms } from '@/services/RoomService';
+// import { roomsRes } from '@/assets/mockdata/rooms.ts';
 
-const Header = () => {
+const Header = ({ roomsResponse }: { roomsResponse: RoomsResponse }) => {
+  if (!roomsResponse.status) {
+    return <div>loading...</div>;
+  }
+
   return (
     <div className="rooms-header">
       <Carousel
-        imageUrlList={roomsRes.result[0].imageUrlList}
+        imageUrlList={roomsResponse.result[0].imageUrlList}
         imageStyle={{
           width: '100%',
           maxHeight: '100vh',
@@ -86,7 +92,11 @@ const Room = ({ room }: { room: Room }) => {
   );
 };
 
-const Rooms = () => {
+const Rooms = ({ roomsResponse }: { roomsResponse: RoomsResponse }) => {
+  if (!roomsResponse.status) {
+    return <div>loading...</div>;
+  }
+
   return (
     <div className="rooms">
       <div className="container">
@@ -96,7 +106,7 @@ const Rooms = () => {
         </div>
 
         <div>
-          {roomsRes.result.map((room, index) => {
+          {roomsResponse.result.map((room, index) => {
             return (
               <div key={index} className="mb-5 rounded-4 overflow-hidden">
                 <Room room={room} />
@@ -110,10 +120,20 @@ const Rooms = () => {
 };
 
 const RoomsPage = () => {
+  const [roomsResponse, setRoomsResponse] = useState<RoomsResponse>({ status: false, result: [] });
+
+  useEffect(() => {
+    async function fetchRooms() {
+      const roomList = await queryRooms();
+      setRoomsResponse(roomList);
+    }
+    fetchRooms();
+  }, []);
+
   return (
     <Layout>
-      <Header />
-      <Rooms />
+      <Header roomsResponse={roomsResponse} />
+      <Rooms roomsResponse={roomsResponse} />
     </Layout>
   );
 };
