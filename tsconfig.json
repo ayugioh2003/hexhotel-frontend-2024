@@ -21,9 +21,9 @@
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@/*": ["./src/*"]
-    },
+    }
   },
-  "include": ["src"],
+  "include": ["src", "src/types/**.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "types": ["vite-plugin-svg-icons/client"]
 }
