@@ -1,15 +1,36 @@
-type RoomInfoType = {
-  showToKnow?: boolean;
-  roomInfo: Array<Record<string, string>>;
-  roomLayout: string[];
-  roomEquipment: string[];
-  supplies: string[];
-};
-
 import InfoList from '@/components/InfoList';
 import SvgIcon from '@/components/SvgIcon';
+import { roomInfo, roomLayout } from '@/assets/mockdata/room-info';
 
-const RoomInfo = ({ showToKnow = false, roomInfo, roomLayout, roomEquipment, supplies }: RoomInfoType) => {
+
+type RoomInfoType = {
+  showToKnow?: boolean;
+  // roomInfo: Array<Record<string, string>>;
+  // roomLayout: string[];
+  // roomEquipment: string[];
+  // supplies: string[];
+  roomDetail: Room;
+};
+const RoomInfo = ({ showToKnow = false,  roomDetail }: RoomInfoType) => {
+  if (!roomDetail?._id) {
+    return <div>loading...</div>
+  }
+
+  // 房型基本資訊
+  const peopleCapacity = roomDetail.maxPeople === 2 ? '2 人' : `2 ~ ${roomDetail.maxPeople} 人`
+  roomInfo[0].text = roomDetail.areaInfo
+  roomInfo[1].text = roomDetail.bedInfo
+  roomInfo[2].text = peopleCapacity
+
+  // 房間格局
+  // API response 沒提供，先寫死
+
+  // 房內設備
+  const roomEquipment = roomDetail.facilityInfo.filter(item => item.isProvide).map(item => item.title)
+
+  // 備品提供
+  const supplies = roomDetail.amenityInfo.filter(item => item.isProvide).map(item => item.title)
+
   return (
     <div className="room-info">
       <h4 className="mb-4">房間資訊</h4>

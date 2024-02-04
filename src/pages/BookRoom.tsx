@@ -412,6 +412,7 @@ const BookRoom = () => {
   // peopleNum: 人數
   // checkInDate: 起住日期
   // checkOutDate: 退房日期
+  // roomDetail: 房型詳細資料
   const location = useLocation();
   const navigate = useNavigate();
   const token = useUserStore((state: { token: string }) => state.token);
@@ -472,6 +473,7 @@ const BookRoom = () => {
       }      
     })()
   }, [location.state, token]);
+
 
   const {
     register, 
@@ -583,7 +585,7 @@ const BookRoom = () => {
 
               <hr />
 
-              <RoomInfo  roomInfo={roomInfo} roomLayout={roomLayout} roomEquipment={roomEquipment} supplies={supplies} />
+              <RoomInfo roomDetail={roomDetail} />
 
             </div>
 
