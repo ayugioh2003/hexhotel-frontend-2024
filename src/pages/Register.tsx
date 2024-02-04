@@ -39,11 +39,6 @@ enum RegisterStepEnum {
     second,
 }
 
-enum RegisterStepEnum {
-  first,
-  second,
-}
-
 const Register = () => {
     const [step, setStep] = useState<RegisterStepEnum>(RegisterStepEnum.first)
     const [data, setData] = useState<RegisterData>({
