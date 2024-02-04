@@ -40,8 +40,8 @@
     "vite-plugin-svg-icons": "^2.0.1"
   },
   "optionalDependencies": {
+    "@esbuild/linux-x64": "0.20.0",
     "@rollup/rollup-darwin-arm64": "4.9.6",
-    "@rollup/rollup-linux-x64-gnu": "4.6.1",
-    "@esbuild/linux-x64": "0.20.0"
+    "@rollup/rollup-linux-x64-gnu": "4.6.1"
   }
 }
