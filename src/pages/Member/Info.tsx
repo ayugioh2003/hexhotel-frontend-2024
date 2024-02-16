@@ -2,6 +2,31 @@ import { useState, useEffect, useCallback, ChangeEvent } from 'react';
 import cityData from '@/assets/data/cityDistrict.json';
 import { queryUser, updateUser } from '@/services/UserService';
 import useUserStore from '@/store/useUserStore';
+type validateFormItem = {
+  status: boolean;
+  msg: string | null;
+};
+enum validateName {
+  oldPassword = 'oldPassword',
+  newPassword = 'newPassword',
+  reNewPassword = 'reNewPassword',
+  name = 'name',
+  phone = 'phone',
+  addressDetail = 'addressDetail'
+}
+type validateForm = {
+  oldPassword: validateFormItem;
+  newPassword: validateFormItem;
+  reNewPassword: validateFormItem;
+  name: validateFormItem;
+  phone: validateFormItem;
+  addressDetail: validateFormItem;
+};
+type errorResponse = {
+  message: string;
+  status: number;
+};
+const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)[a-zA-Z\d]{8,16}$/;
 const MemberInfo = () => {
   const token = useUserStore(s => s.token);
   const [mode, setMode] = useState(() => 'show');
@@ -128,6 +153,34 @@ const MemberInfo = () => {
     const [month, setMonth] = useState(() => '1');
     const [date, setDate] = useState(() => '1');
     const [dates, setDates] = useState<string[]>(() => ['1']);
+    const [validateObj, setValidateObj] = useState<validateForm>(function () {
+      return {
+        oldPassword: {
+          status: true,
+          msg: null
+        },
+        newPassword: {
+          status: true,
+          msg: null
+        },
+        reNewPassword: {
+          status: true,
+          msg: null
+        },
+        name: {
+          status: true,
+          msg: null
+        },
+        phone: {
+          status: true,
+          msg: null
+        },
+        addressDetail: {
+          status: true,
+          msg: null
+        }
+      };
+    });
     useEffect(() => {
       if (userData != null) {
         setId(userData._id);
@@ -173,9 +226,6 @@ const MemberInfo = () => {
         setAddressDetail(userData.address.detail);
       }
     }, [userData]);
-    useEffect(() => {
-      console.log(date);
-    }, [date]);
     let YearSelector: React.FC = () => {
       let yearList = Array.from(
         {
@@ -281,21 +331,104 @@ const MemberInfo = () => {
       );
     };
     const updateUserInfo = async () => {
-      let updateInfo = {
-        userId: id,
-        name: name,
-        phone: phone,
-        birthday: `${year}/${month}/${date}`,
-        address: {
-          zipcode: Number(town),
-          detail: addressDetail
+      let validateFormItem: {
+        item: string;
+        name: validateName;
+        rull: string[];
+      }[] = [
+        {
+          item: oldPassword,
+          name: validateName.oldPassword,
+          rull: ['empty', 'password']
         },
-        oldPassword: oldPassword,
-        newPassword: newPassword
-      };
-      await updateUser(updateInfo, token);
-      getUserInfo();
-      setMode('show');
+        {
+          item: newPassword,
+          name: validateName.newPassword,
+          rull: ['empty', 'password']
+        },
+        {
+          item: reNewPassword,
+          name: validateName.reNewPassword,
+          rull: ['empty', 'password', 'checkPassword']
+        },
+        {
+          item: name,
+          name: validateName.name,
+          rull: ['empty']
+        },
+        {
+          item: phone,
+          name: validateName.phone,
+          rull: ['empty']
+        },
+        {
+          item: addressDetail,
+          name: validateName.addressDetail,
+          rull: ['empty']
+        }
+      ];
+      let tempValidateResult = { ...validateObj };
+      let canUpdateInfo: boolean = true;
+      validateFormItem.forEach(formItem => {
+        validateObj[formItem.name].status = true;
+        formItem.rull.some(rullItem => {
+          switch (rullItem) {
+            case 'empty': {
+              if (formItem.item == null || formItem.item.length == 0) {
+                tempValidateResult[formItem.name].status = false;
+                tempValidateResult[formItem.name].msg = '此欄位請勿為空';
+                canUpdateInfo = false;
+                return true;
+              }
+              return false;
+            }
+            case 'password': {
+              let regStatus = passwordRegex.test(formItem.item);
+              if (regStatus == false) {
+                tempValidateResult[formItem.name].status = false;
+                tempValidateResult[formItem.name].msg = '密碼應在 8 到 16 個字，包含英文和數字';
+                canUpdateInfo = false;
+                return true;
+              }
+              return false;
+            }
+            case 'checkPassword': {
+              if (newPassword != reNewPassword) {
+                tempValidateResult.reNewPassword.status = false;
+                tempValidateResult.reNewPassword.msg = '請確認輸入的密碼';
+                canUpdateInfo = false;
+                return true;
+              }
+              return false;
+            }
+          }
+        });
+      });
+      setValidateObj(tempValidateResult);
+      if (canUpdateInfo) {
+        try {
+          let updateInfo = {
+            userId: id,
+            name: name,
+            phone: phone,
+            birthday: `${year}/${month}/${date}`,
+            address: {
+              zipcode: Number(town),
+              detail: addressDetail
+            },
+            oldPassword: oldPassword,
+            newPassword: newPassword
+          };
+          await updateUser(updateInfo, token);
+          getUserInfo();
+          setMode('show');
+        } catch (err: any) {
+          let error: errorResponse = err;
+          alert(error.message);
+        }
+      } else {
+        return false;
+      }
     };
     return (
       <div className="row">
@@ -310,7 +443,7 @@ const MemberInfo = () => {
                 autoComplete="false"
                 placeholder="請輸入電子信箱"
                 value={email}
-                onChange={e => handleInput(e, setEmail)}
+                disabled
               ></input>
             </div>
             <div className="card-item">
@@ -323,6 +456,9 @@ const MemberInfo = () => {
                 value={oldPassword}
                 onChange={e => handleInput(e, setOldPassword)}
               ></input>
+              {validateObj.oldPassword.status == false && (
+                <div className="card-item-info">{validateObj.oldPassword.msg}</div>
+              )}
             </div>
             <div className="card-item">
               <div className="card-item-label">新密碼</div>
@@ -334,6 +470,9 @@ const MemberInfo = () => {
                 value={newPassword}
                 onChange={e => handleInput(e, setNewPassword)}
               ></input>
+              {validateObj.newPassword.status == false && (
+                <div className="card-item-info">{validateObj.newPassword.msg}</div>
+              )}
             </div>
             <div className="card-item">
               <div className="card-item-label">確認新密碼</div>
@@ -345,6 +484,9 @@ const MemberInfo = () => {
                 value={reNewPassword}
                 onChange={e => handleInput(e, setReNewPassword)}
               ></input>
+              {validateObj.reNewPassword.status == false && (
+                <div className="card-item-info">{validateObj.reNewPassword.msg}</div>
+              )}
             </div>
             <div>
               <button type="button" className="btn btn-secondary" onClick={() => updateUserInfo()}>
@@ -365,6 +507,7 @@ const MemberInfo = () => {
                 value={name}
                 onChange={e => handleInput(e, setName)}
               ></input>
+              {validateObj.name.status == false && <div className="card-item-info">{validateObj.name.msg}</div>}
             </div>
             <div className="card-item">
               <div className="card-item-label">手機號碼</div>
@@ -375,6 +518,7 @@ const MemberInfo = () => {
                 value={phone}
                 onChange={e => handleInput(e, setPhone)}
               ></input>
+              {validateObj.phone.status == false && <div className="card-item-info">{validateObj.phone.msg}</div>}
             </div>
             <div className="card-item">
               <div className="card-item-label">生日</div>
@@ -397,6 +541,9 @@ const MemberInfo = () => {
                 value={addressDetail}
                 onChange={e => handleInput(e, setAddressDetail)}
               ></input>
+              {validateObj.addressDetail.status == false && (
+                <div className="card-item-info">{validateObj.addressDetail.msg}</div>
+              )}
             </div>
             <div>
               <button type="button" className="btn btn-secondary" onClick={() => updateUserInfo()}>
