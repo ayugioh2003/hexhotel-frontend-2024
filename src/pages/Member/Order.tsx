@@ -56,7 +56,11 @@ const OrderHistoryList: React.FC = () => {
     (async () => {
       let res = await getUserOrders(token);
       let tempRoomList: order[] = [];
-      let result = res.result.filter((item: any) => item.status !== 0);
+      let result = res.result.filter((item: any) => {
+        let checkInTime =
+          new Date(item.checkInDate).getTime() + 1000 * 60 * 60 * (15 + new Date().getTimezoneOffset() / 60);
+        return item.status !== 0 || checkInTime < new Date().getTime();
+      });
       result.forEach((item: any) => {
         let id = item._id;
         let equipment: string[] = [];
@@ -145,7 +149,11 @@ const Order = () => {
   async function getOrder() {
     let res = await getUserOrders(token);
     let tempRoomList: order[] = [];
-    let result = res.result.filter((item: any) => item.status === 0);
+    let result = res.result.filter((item: any) => {
+      let checkInTime =
+        new Date(item.checkInDate).getTime() + 1000 * 60 * 60 * (15 + new Date().getTimezoneOffset() / 60);
+      return item.status === 0 && checkInTime > new Date().getTime();
+    });
     result.forEach((item: any) => {
       let id = item._id;
       let equipment: string[] = [];
