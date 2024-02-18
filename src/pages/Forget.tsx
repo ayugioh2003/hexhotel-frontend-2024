@@ -3,7 +3,7 @@ import { useState, ChangeEvent } from "react"
 import { useNavigate  } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { forgot } from '@/services/UserService'
-import { generateEmailCode } from '@/services/VerifyService';
+import { verifyEmailExist, generateEmailCode } from '@/services/VerifyService';
 import bgLogin from '@/assets/png/bg_login.png'
 
 enum ForgetStepEnum {
@@ -124,7 +124,22 @@ const Forget = () => {
       if(!isValid) {
         return
       }
+
       try {
+        const verifyEmailres = await verifyEmailExist({ email: email })
+
+        if (!verifyEmailres.result.isEmailExists) {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "此信箱尚未註冊，請重新再試",
+            showConfirmButton: false,
+            timer: 1500,
+            toast: true,
+          });
+          return
+        }
+
         const res = await generateEmailCode({ email: email })
 
         if (res.status) {
