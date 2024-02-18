@@ -72,6 +72,11 @@ const Login = () => {
         return isValid
     }
 
+    const handleForgetPwd = () => {
+      console.log('forget pwd')
+      navigate('/forget')
+    }
+
     return (
         <Layout showFooter={false}>
             <div className="min-vh-100 row g-0 dark-background">
@@ -118,7 +123,7 @@ const Login = () => {
                             <label htmlFor="remember" className="text-white">
                                 <input type="checkbox" name="remember" id="remember" checked={isRemember} onChange={handleChangeIsRemember}/> 記住帳號
                             </label>
-                            <a href="#">忘記密碼</a>
+                            <span className="text-primary" style={{ cursor: 'pointer'}} onClick={handleForgetPwd}>忘記密碼</span>
                         </div>
                         <button type="button" className="btn btn-primary w-100 mt-4" onClick={handleLogin}>會員登入</button>
                         <p className="mb-0 mt-4 text-white">沒有會員嗎？ <Link to="/register">前往註冊</Link></p>
