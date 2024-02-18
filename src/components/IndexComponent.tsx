@@ -34,7 +34,7 @@ export const RoomComponent = (props: RoomComponentType) => {
     <>
         <div className="col-md-6">
             <img 
-                className="object-fit-cover w-100 h-100 object-position-center-center" 
+                className="object-fit-cover w-100 h-100 object-position-center" 
                 src={imageUrl} 
                 alt={name} 
             />                    

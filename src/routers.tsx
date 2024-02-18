@@ -2,6 +2,7 @@ import { createHashRouter, Navigate } from 'react-router-dom';
 import Index from '@/pages/Index.tsx';
 import Login from '@/pages/Login.tsx';
 import Register from '@/pages/Register.tsx';
+import Forget from '@/pages/Forget.tsx';
 import Member from '@/pages/Member.tsx';
 import MemberInfo from '@/pages/Member/Info';
 import MemberOrder from '@/pages/Member/Order';
@@ -84,6 +85,10 @@ const routers = createHashRouter([
       {
         path: '/Register',
         element: <Register />
+      },
+      {
+        path: '/Forget',
+        element: <Forget />
       }
     ]
   },

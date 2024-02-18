@@ -64,6 +64,12 @@
         }
       }
     }
+    &-info {
+      @include tw-text-tiny();
+      color: $danger-120;
+      // position: absolute;
+      margin-top: 4px;
+    }
     &-input_wrapper {
       display: flex;
       margin: 0 -10px;

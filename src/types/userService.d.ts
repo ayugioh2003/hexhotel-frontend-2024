@@ -71,6 +71,7 @@ interface ForgotRequest {
 // 忘記密碼 Response
 interface ForgotResponse {
   status: boolean;
+  message?: string;
 }
 
 // 檢查是否登入 Response
