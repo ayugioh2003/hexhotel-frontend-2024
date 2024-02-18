@@ -6,7 +6,13 @@ import { forgot } from '@/services/UserService'
 import { generateEmailCode } from '@/services/VerifyService';
 import bgLogin from '@/assets/png/bg_login.png'
 
-const Login = () => {
+enum ForgetStepEnum {
+    first,
+    second,
+}
+
+const Forget = () => {
+    const [step, setStep] = useState<ForgetStepEnum>(ForgetStepEnum.first)
     const [email, setEmail] = useState('')
     const [emailValidator, setEmailValidator] = useState('')
     const [password, setPassword] = useState('')
@@ -114,10 +120,15 @@ const Login = () => {
   }
 
     const handleEmailCode = async () => {
+      const isValid = validateEmail(email)
+      if(!isValid) {
+        return
+      }
       try {
         const res = await generateEmailCode({ email: email })
 
         if (res.status) {
+          setStep(ForgetStepEnum.second)
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -162,70 +173,67 @@ const Login = () => {
                     <form className="d-flex flex-column justify-content-center align-items-stretch">
                         <p className="text-primary mb-2">享樂酒店，誠摯歡迎</p>
                         <h2 className="h1 text-white mb-4" >忘記密碼</h2>
-
-                        <h3 className="text-white mb-4">Step1: 輸入信箱並點擊按鈕，我們將傳送能修改密碼的驗證碼到您的信箱</h3>
-                        <label htmlFor="email" className="text-white mb-1">電子信箱</label>
-                        <input 
-                            type="text" id="email" 
-                            className={`form-control ${emailValidator ? 'is-invalid' : ''}`} 
-                            value={email} 
-                            autoComplete="username"
-                            onChange={handleChangeEmail}
-                            />
-                        {
-                            emailValidator &&
-                            <div className="invalid-feedback mt-1">
-                                {emailValidator}
-                            </div>
-                        }
-                        <button className="btn btn-primary mt-4" onClick={handleEmailCode}>傳送驗證碼</button>
-
-                        <hr />
-
-                        <h3 className="text-white mb-4">Step2: 填入信箱、新密碼與剛剛在信箱收到的驗證碼，以修改密碼</h3>
-
-                        <label htmlFor="email" className="text-white mb-1">電子信箱</label>
-                        <input 
-                            type="text" id="email" 
-                            className={`form-control ${emailValidator ? 'is-invalid' : ''}`} 
-                            value={email} 
-                            autoComplete="username"
-                            onChange={handleChangeEmail}
-                            />
-                        {
-                            emailValidator &&
-                            <div className="invalid-feedback mt-1">
-                                {emailValidator}
-                            </div>
-                        }
-                        <label htmlFor="password" className="text-white mb-1 mt-3">密碼</label>
-                        <input 
-                            type="password" id="password" 
-                            className={`form-control ${passwordValidator ? 'is-invalid' : ''}`} 
-                            value={password} 
-                            autoComplete="current-password"
-                            onChange={handleChangePassword} 
-                            />
-                        {
-                            passwordValidator &&
-                            <div className="invalid-feedback mt-1">
-                                {passwordValidator}
-                            </div>
-                        }
-                        <label htmlFor="code" className="text-white mb-1">驗證碼</label>
-                        <input 
-                            type="text" id="code" 
-                            className={`form-control ${codeValidator ? 'is-invalid' : ''}`} 
-                            value={code} 
-                            onChange={handleChangeCode}
-                            />
-                        {
-                            codeValidator &&
-                            <div className="invalid-feedback mt-1">
-                                {codeValidator}
-                            </div>
-                        }
-                        <button type="button" className="btn btn-primary w-100 mt-4" onClick={handleForgot}>修改密碼</button>
+                    {
+                        step === ForgetStepEnum.first ?
+                        <>
+                            <h3 className="text-white mb-4">Step1: 取得驗證碼</h3>
+                            <label htmlFor="email" className="text-white mb-1">電子信箱</label>
+                            <input 
+                                type="text" id="email" 
+                                className={`form-control ${emailValidator ? 'is-invalid' : ''}`} 
+                                value={email} 
+                                autoComplete="username"
+                                onChange={handleChangeEmail}
+                                />
+                            {
+                                emailValidator &&
+                                <div className="invalid-feedback mt-1">
+                                    {emailValidator}
+                                </div>
+                            }
+                            <button type="button" className="btn btn-primary mt-4" onClick={handleEmailCode}>傳送驗證碼</button>
+                        </> : 
+                        <>
+                            <h3 className="text-white mb-4">Step2: 設定新密碼</h3>
+                            <label htmlFor="email" className="text-white mb-1">電子信箱</label>
+                            <input 
+                                type="text" id="email" 
+                                className={`form-control ${emailValidator ? 'is-invalid' : ''}`} 
+                                value={email} 
+                                autoComplete="username"
+                                disabled
+                                readOnly
+                                />
+                            <label htmlFor="password" className="text-white mb-1 mt-3">新密碼</label>
+                            <input 
+                                type="password" id="password" 
+                                className={`form-control ${passwordValidator ? 'is-invalid' : ''}`} 
+                                value={password} 
+                                autoComplete="current-password"
+                                onChange={handleChangePassword} 
+                                />
+                            {
+                                passwordValidator &&
+                                <div className="invalid-feedback mt-1">
+                                    {passwordValidator}
+                                </div>
+                            }
+                            <label htmlFor="code" className="text-white mb-1 mt-3">驗證碼</label>
+                            <input 
+                                type="text" id="code" 
+                                className={`form-control ${codeValidator ? 'is-invalid' : ''}`} 
+                                value={code} 
+                                onChange={handleChangeCode}
+                                />
+                            {
+                                codeValidator &&
+                                <div className="invalid-feedback mt-1">
+                                    {codeValidator}
+                                </div>
+                            }
+                            <button type="button" className="btn btn-primary w-100 mt-4" onClick={handleForgot}>修改密碼</button>                        
+                        </>
+                    }
                     </form>
                 </div>
             </div>
@@ -233,4 +241,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Forget
