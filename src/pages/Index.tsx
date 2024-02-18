@@ -36,7 +36,7 @@ const Index = () => {
 
     return (
         <Layout>
-            <div className="overflow-hidden">
+            <div className="overflow-x-hidden">
                 <div className="vh-100 position-relative">
                     <img 
                         className="object-fit-cover w-100 min-vh-100 position-absolute object-position-center-center" 
@@ -56,7 +56,7 @@ const Index = () => {
                         </div>
                     </div>
                 </div>
-                <div className="row p-2 p-md-5" style={{background: "#F1EAE4"}}>
+                <div className="row p-2 p-md-5 mx-0" style={{background: "#F1EAE4"}}>
                     <h2 className="col-md-2 text-primary mb-5">最新<br />消息</h2>
                     <div className="col-md-10">
                         {news.map(m => <NewsComponent key={m._id} title={m.title} description={m.description} image={m.image} />)}
@@ -80,7 +80,7 @@ const Index = () => {
                         <p className="mb-4 text-white">享樂酒店，不僅是您在高雄的住宿之選，更是您感受高雄魅力的最佳舞台。我們期待著您的蒞臨，讓我們共同編織一段難忘的高雄故事。</p>
                     </div>
                 </div>
-                <div className="vh-100 row bg-black">
+                <div className="vh-100 row mx-0 bg-black">
                     {
                         rooms.length > 0 && 
                         <RoomComponent 
